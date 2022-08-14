@@ -1,0 +1,74 @@
+.pro_badge_color {
+  --bs-bg-opacity: 1;
+  color: white;
+  background-color: rgba(73, 192, 208, 0.8);
+}
+
+.pro_badge_color_disabled {
+  --bs-bg-opacity: 1;
+  color: white;
+  background-color: #949494;
+}
+
+.pro_button {
+  --bs-bg-opacity: 1;
+  color: white;
+  background-color: rgba(73, 192, 208, 0.8);
+}
+
+.pro_button:hover {
+  color: white;
+  background: #1379d2;
+}
+
+.pro_button:active,
+.pro_button:focus {
+  box-shadow: none;
+}
+
+.pro_star_color {
+  color: #f5ed14;
+}
+
+.rev_router_link_color {
+  color: #636363;
+}
+
+.com_link_blue {
+  color: black;
+  text-decoration-line: none;
+}
+.com_link_red {
+  color: red;
+  text-decoration-line: none;
+}
+
+.com_link_blue:hover {
+  color: #1379d2;
+}
+
+.com_link_red:hover {
+  color: red;
+}
+
+.com_link_blue:focus,
+.com_link_red:focus {
+  box-shadow: none;
+}
+
+.pro_a_black {
+  color: black;
+  text-decoration: none;
+}
+
+.pro_ellipsis {
+  /* width:70px;
+  padding:0 5px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro_font_bold {
+  font-weight: bold;
+}
