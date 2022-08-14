@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 케러셀 -->
     <div
       id="carouselExampleControls"
       class="carousel slide"
@@ -43,7 +44,9 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+    <!-- 캐러셀 -->
 
+    <!-- 상단 : 프로젝트 리스트 -->
     <div class="container">
       <div class="row mt-5">
         <p id="tb" class="col-3 text-start h2">
@@ -58,52 +61,8 @@
         </p>
         <hr />
       </div>
-      <!-- 패러셀 -->
-
-      <!-- 상단 : 프로젝트 리스트 -->
       <CardList class="mt-3" :projects="projects"></CardList>
-      <!-- <div class="project-list">
-        <div class="row" style="vertical-align: middle">
-          <div
-            id="card"
-            class="card col my-3 p-0"
-            style="border-radius: 10px; max-width: 286px; min-width: 286px"
-            v-for="(project, i) in projects"
-            :key="i">
-            <p class="card-title text-start text-muted p-2">
-              시작예정일 : {{ project.expDate }}
-            </p>
-            <div class="card-body">
-              <h2 class="fs-5 text-center">
-                <strong>{{ project.title }}</strong>
-              </h2>
-              <p class="text-start text-muted">
-                {{ project.info }}
-              </p>
-              <div class="card-subtitle text-end">
-                <i class="bi bi-eye me-1"></i>{{ project.viewCount }}
-                <div class="row text-center">
-                  <p class="col-8 text-start">{{ project.writter }}</p>
-                  <p class="col-4 text-end">
-                    <i class="bi bi-bookmark me-1"></i
-                    >{{ project.bookmarkCount }}
-                  </p>
-                  <hr />
-                  <div class="text-center" style="justify-content: center">
-                    <div
-                      class="stack-icon mx-1"
-                      style="width: auto"
-                      v-for="(stack, index) in project.stacks"
-                      :key="index">
-                      {{ stack }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
+      <!-- 상단 : 프로젝트 리스트 -->
 
       <!-- 하단 : 멘토리스트 -->
       <div style="margin-top: 120px"></div>
@@ -168,7 +127,6 @@
 
 <script>
 import CardList from "@/components/CardList.vue";
-// @ is an alias to /src
 
 export default {
   name: "HomeView",
@@ -177,56 +135,7 @@ export default {
     return {
       rate1: [3.7, 4.6, 4.9, 3.2, 4, 2.7],
       rate2: [12, 43, 5, 10, 34, 20],
-      mentors: [
-        {
-          img: "../assets/profile.jpg",
-          name: "joansdev",
-          score: "5.0",
-          scoreCount: "14",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["프론트엔드", "디자인"]
-        },
-        {
-          img: "../assets/profile2.jpg",
-          name: "캡틴안산",
-          score: "4.5",
-          scoreCount: "9",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["백엔드", "모바일"]
-        },
-        {
-          img: "../assets/profile.jpg",
-          name: "스티브잡스",
-          score: "5.0",
-          scoreCount: "201",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["모바일"]
-        },
-        {
-          img: "../assets/profile.jpg",
-          name: "joansdev",
-          score: "5.0",
-          scoreCount: "14",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["프론트엔드", "디자인"]
-        },
-        {
-          img: "../assets/profile.jpg",
-          name: "joansdev",
-          score: "5.0",
-          scoreCount: "14",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["프론트엔드", "디자인"]
-        },
-        {
-          img: "../assets/profile.jpg",
-          name: "joansdev",
-          score: "5.0",
-          scoreCount: "14",
-          info: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-          part: ["프론트엔드", "디자인"]
-        }
-      ],
+      mentors: [],
       projects: [],
       mentors2: []
     };

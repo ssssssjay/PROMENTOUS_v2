@@ -59,10 +59,7 @@
                   :href="`${review.url_address}`"
                   target="_blank"
                   class="rev_router_link_color">
-                  <button
-                    type="button"
-                    class="btn btn-sm me-2 pro_button"
-                    v-if="review.url_title && null && []">
+                  <button type="button" class="btn btn-sm me-2 pro_button">
                     {{ review.url_title }}
                   </button>
                 </a>

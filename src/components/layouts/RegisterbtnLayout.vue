@@ -7,23 +7,12 @@
 </template>
 <script>
 export default {
-  components: {},
   props: {
     btnText: {
       type: String,
       default: "모집글 작성"
     }
-  },
-  data() {
-    return {
-      sampleData: ""
-    };
-  },
-  setup() {},
-  created() {},
-  mounted() {},
-  unmounted() {},
-  methods: {}
+  }
 };
 </script>
 <style scoped>
