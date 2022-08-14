@@ -94,6 +94,7 @@
               추가
             </button>
           </div>
+          <h1>{{ this.DEPT_LIST }}</h1>
           <div class="row" v-for="(DEPT, index) in DEPT_LIST" :key="index">
             <label for="reqNum" class="col-sm-2"> </label>
 
@@ -323,7 +324,7 @@ export default {
       if (this.URL.url_title !== "" && this.URL.url_address !== "") {
         let obj0 = {
           ["url_title"]: this.URL.url_title,
-          ["url_address"]: this.URL.url_address
+          ["url_address"]: `https://${this.URL.url_address}`
         };
         this.URL_LIST.push(obj0);
         this.URL.url_title = "";
@@ -361,7 +362,7 @@ export default {
         this.PROJECT_TITLE === "" ||
         this.PROJECT_DESC === "" ||
         this.EXP_PERIOD === 0 ||
-        this.DEPT_LIST === [] ||
+        this.DEPT_LIST.length === 0 ||
         this.PROGRESS_METHOD === "" ||
         this.WARRANTY === "" ||
         this.STACKS === "" ||

@@ -5,8 +5,8 @@
         <div class="logo">
           <router-link
             class="navbar-brand mainLogo"
-            :class="{ active: $route.path == '/home' }"
-            to="/home"
+            :class="{ active: $route.path == '/' }"
+            to="/"
             >PROMENTOUS</router-link
           >
         </div>
@@ -195,7 +195,7 @@ export default {
     },
     onClickLogout() {
       this.$store.commit("user", {});
-      this.$router.push("/home");
+      this.$router.push("/");
     },
     viewProfile() {
       this.clickProfile = !this.clickProfile;

@@ -11,28 +11,14 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    toTop() {},
-    functionA() {
-      //     console.log("AXIOS에서 호출함");
-    },
-    functionAA(param) {
-      //      console.log("axiosparam");
-      console.log(param);
-    },
-    /**************************/
-    /**AXIOS 용 **/
-    /** */
-    /**************************/
+    /** AXIOS 용 **/
     async $get(url) {
-      //   console.log("get url ");
       return (
         await axios.get(url).catch((e) => {
-          //      console.log("get url ");
-          //      console.log(e);
+          console.log(e);
         })
       ).data;
     },
-
     async $post(url, data) {
       return await axios.post(url, data).catch((e) => {
         console.log(e);
@@ -53,8 +39,5 @@ export default {
         console.log(e);
       });
     }
-    /**************************/
-    /** XXXXXXXXX    용 **/
-    /**************************/
   }
 };

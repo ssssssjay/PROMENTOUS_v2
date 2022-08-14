@@ -175,7 +175,7 @@
                 type="button"
                 class="btn btn-dark btn-lg"
                 v-show="editStatus"
-                @click="[changeStatus1(), passData(), goToHome('/home')]">
+                @click="[changeStatus1(), passData()]">
                 {{ this.buttonStatus }}
               </button>
               <button
