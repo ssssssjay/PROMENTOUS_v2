@@ -9,6 +9,7 @@
               id="txtarea"
               class="form-control"
               rows="5"
+              style="resize: none"
               v-model="commentText"></textarea>
           </div>
         </div>
