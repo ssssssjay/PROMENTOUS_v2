@@ -65,7 +65,6 @@
                   })
                 )
               ]"
-              @clear="deselected"
               :key="componentKey" />
             <select
               name=""
@@ -256,7 +255,9 @@
                   v-bind:src="app.userImage"
                   class="card-img-top m-2 userImage"
                   alt="..."
-                  @click="[handleClick4(), transIndex(index)]" />
+                  @click="
+                    [handleClick3(), transIndex(index), applicantModal()]
+                  " />
 
                 <h5 class="card-title applicantNickname">
                   {{ app.applicantNickname }}
@@ -323,7 +324,9 @@
         <!-- 팀원  -->
         <TeamMemberProfileModal
           ref="modal3"
-          :memberData="this.teamMembers[this.memberIndex]" />
+          :memberData="this.teamMembers[this.memberIndex]"
+          :applicantData="this.applicants[this.memberIndex]"
+          :modalData="this.ModalData" />
         <div class="p-2 mb-5 d-inline-flex bd-highlight">
           <div class="memberText">
             <div class="tab-title">팀원정보</div>
@@ -355,7 +358,9 @@
                   v-bind:src="mem.userImage"
                   class="card-img-top mt-2 userImage"
                   alt="..."
-                  @click="[handleClick3(), transIndex(index)]" />
+                  @click="
+                    [handleClick3(), transIndex(index), teamMemberModal()]
+                  " />
 
                 <h5 class="card-title applicantNickname">
                   {{ mem.userNickname }}
@@ -522,7 +527,6 @@ import { ref } from "vue";
 import TeamRatingModal from "@/components/TeamRatingModal.vue";
 // import MentorRatingModal from "@/components/MentorRatingModal.vue";
 import TeamMemberProfileModal from "@/components/UserProfileModal.vue";
-import ApplicantProfileModal from "@/components/applicantProfileModal.vue";
 
 export default {
   name: "App",
@@ -532,8 +536,7 @@ export default {
     TeamStatus,
     RegisterbtnLayout,
     TeamRatingModal,
-    TeamMemberProfileModal,
-    ApplicantProfileModal
+    TeamMemberProfileModal
   },
   computed: {
     user() {
@@ -542,6 +545,7 @@ export default {
   },
   data() {
     return {
+      ModalData: "empty",
       path: "",
       //db작업 x 변수
       teamStatusName: "",
@@ -633,12 +637,11 @@ export default {
     const modal = ref(null);
     const modal2 = ref(null);
     const modal3 = ref(null);
-    const modal4 = ref(null);
+
     const modalContent = ref(["코멘트와 평점을 입력해주세요"]);
     const result = ref("");
     const result2 = ref("");
     const result3 = ref("");
-    const result4 = ref("");
 
     const handleClick = async () => {
       const ok = await modal.value.show();
@@ -664,29 +667,20 @@ export default {
         result3.value = "cancel";
       }
     };
-    const handleClick4 = async () => {
-      const ok = await modal4.value.show();
-      if (ok) {
-        result4.value = "ok";
-      } else {
-        result4.value = "cancel";
-      }
-    };
 
     return {
       modal,
       modal2,
       modal3,
-      modal4,
+
       modalContent,
       result,
       result2,
       result3,
-      result4,
+
       handleClick,
       handleClick2,
-      handleClick3,
-      handleClick4
+      handleClick3
     };
   },
   created() {
@@ -703,6 +697,12 @@ export default {
   },
   unmounted() {},
   methods: {
+    applicantModal() {
+      this.ModalData = "applicant";
+    },
+    teamMemberModal() {
+      this.ModalData = "teammember";
+    },
     goToProjectDetail(id) {
       window.scrollTo(0, 0);
       this.path = `/project/recruit/${id}`;
@@ -994,6 +994,30 @@ export default {
 };
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style>
+<style>
+.multiselect.is-active {
+  box-shadow: 0 0 0 var(--ms-ring-width, 3px) var(--ms-ring-color, #1379d2);
+}
+.multiselect-tag {
+  background: var(--ms-tag-bg, #1379d2);
+}
+.multiselect-group-label.is-selected {
+  background: var(--ms-group-label-bg-selected, #1379d2);
+  color: var(--ms-group-label-color-selected, #fff);
+}
+.multiselect-group-label.is-selected.is-pointed {
+  background: var(--ms-group-label-bg-selected-pointed, #1379d2);
+  color: var(--ms-group-label-color-selected-pointed, #fff);
+}
+.multiselect-option.is-selected {
+  background: var(--ms-group-label-bg-selected, #1379d2);
+  color: var(--ms-group-label-color-selected, #fff);
+}
+.multiselect-option.is-selected.is-pointed {
+  background: var(--ms-group-label-bg-selected-pointed, #1379d2);
+  color: var(--ms-group-label-color-selected-pointed, #fff);
+}
+</style>
 <style scoped>
 .tab-title {
   font-size: 20px;
@@ -1007,8 +1031,8 @@ export default {
 }
 
 .ProjectSelect:focus {
-  box-shadow: 0 0 0 var(--ms-ring-width, 3px)
-    var(--ms-ring-color, rgba(16, 185, 129, 0.188));
+  box-shadow: 0 0 0 var(--ms-ring-width, 3px) var(--ms-ring-color, #1379d2);
+
   border: 0px;
 }
 
@@ -1158,8 +1182,8 @@ div.col.mentoring {
   margin-right: 12px;
 }
 button.btn.btn-primary {
-  background-color: #49c0d0;
-  border-color: #49c0d0;
+  background-color: #1379d2;
+  border-color: #1379d2;
 }
 
 .emptyProject {
