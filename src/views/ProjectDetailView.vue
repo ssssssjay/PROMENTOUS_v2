@@ -112,19 +112,20 @@
                 </span>
               </span>
             </p>
+
             <div class="my-4">
               <span class="text-muted pro_font_bold">| 프로젝트 소개</span>
+              <hr />
               <div
-                class="widget-box fs-4 p-5"
+                class="widget-box desc-project"
                 v-html="project.project_desc"></div>
             </div>
-
-            <div class="py-5" v-if="status_code === FIN">
+            <div class="py-5" v-if="project.status_code === FIN">
               <review-carousel :projectId="projectId" />
+              <hr />
             </div>
           </div>
         </div>
-        <hr />
         <!-- 댓글 -->
         <div>
           <write-comment-view
@@ -612,15 +613,34 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .widget-box {
   border: 1.5px solid gray;
   border-radius: 10px;
   padding: 10px;
-  margin: 20px;
+  margin: 20px 0;
   text-align: left;
 }
-
+.widget-box.desc-project ::v-deep {
+  border: none;
+  padding: 0;
+  * {
+    margin-bottom: 0;
+    line-height: 1.6em;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+}
 .pro_fixed {
   /* position: sticky; */
   top: 0;
