@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <VueEditor v-model="EDITOR_CONTENTS" @blur="transEditerData"></VueEditor>
-
-    <p></p>
+    <VueEditor
+      v-model="EDITOR_CONTENTS"
+      :editor-toolbar="customToolbar"
+      style="height: 500px"
+      @text-change="transEditerData"></VueEditor>
   </div>
 </template>
 
@@ -22,13 +24,16 @@ export default {
 
   data() {
     return {
-      EDITOR_CONTENTS: this.contents
+      EDITOR_CONTENTS: this.contents,
+      customToolbar: [
+        [{ header: [false, 1, 2, 3, 4, 5, 6] }],
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote", "code-block"],
+        [{ list: "ordered" }, { list: "bullet" }]
+      ]
     };
   },
   methods: {
-    hi() {
-      console.log("hi");
-    },
     transEditerData() {
       this.$emit("send-EditorData", this.EDITOR_CONTENTS);
     }
