@@ -1,7 +1,7 @@
 .pro_badge_color {
   --bs-bg-opacity: 1;
   color: white;
-  background-color: rgba(73, 192, 208, 0.8);
+  background-color: #1379d2;
 }
 
 .pro_badge_color_disabled {
@@ -13,7 +13,7 @@
 .pro_button {
   --bs-bg-opacity: 1;
   color: white;
-  background-color: rgba(73, 192, 208, 0.8);
+  background-color: #1379d2;
 }
 
 .pro_button:hover {

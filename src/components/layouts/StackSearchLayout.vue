@@ -37,6 +37,7 @@ export default {
   methods: {
     transStacks() {
       this.value = [];
+      // Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'length')
       for (let i = 0; i < this.stacks.length; i++) {
         for (let j = 0; j < this.options.length; j++) {
           if (
