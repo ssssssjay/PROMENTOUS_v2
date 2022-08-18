@@ -22,11 +22,11 @@
             >시작 예정일</label
           >
           <div class="col-sm-3">
-            <input
-              type="datetime-local"
-              name=""
-              id=""
-              v-model="EXP_START_DATE" />
+            <!-- :enableTimePicker="false" 시간선택 못하게, utc 기본인풋처럼 형식 -->
+            <Datepicker
+              v-model="EXP_START_DATE"
+              :enableTimePicker="false"
+              utc />
           </div>
 
           <label for="onoff" class="col-sm-2 col-form-label">진행기간</label>
@@ -141,22 +141,20 @@
               <input
                 type="radio"
                 id="O"
-                name="contact"
-                value="O"
-                v-model="WARRANTY"
+                value="true"
+                v-model="isWarranty"
                 class="me-2" />
               <label for="O" class="me-3">O</label>
               <input
                 class="me-3 form-select warranty"
                 type="number"
                 v-model="WARRANTY"
-                v-show="WARRANTY !== '-1' && WARRANTY !== ''" />
+                v-show="isWarranty === 'true'" />
               <input
                 type="radio"
                 id="X"
-                value="-1"
-                name="contact"
-                v-model="WARRANTY"
+                value="false"
+                v-model="isWarranty"
                 class="me-2" />
               <label for="X" class="me-3">X</label>
             </div>
@@ -245,13 +243,16 @@ import RegionSortLayout from "@/components/layouts/RegionSortLayout.vue";
 import StackSearchLayout from "@/components/layouts/StackSearchLayout.vue";
 import TextEditor from "@/components/TextEditor.vue";
 import RegisterbtnLayout from "../components/layouts/RegisterbtnLayout.vue";
+import Datepicker from "@vuepic/vue-datepicker";
+
 export default {
   name: "app",
   components: {
     RegionSortLayout,
     StackSearchLayout,
     TextEditor,
-    RegisterbtnLayout
+    RegisterbtnLayout,
+    Datepicker
   },
   data() {
     return {
@@ -277,10 +278,10 @@ export default {
       CONTENTS:
         "<h1>1. 프로젝트 주제</h1> <p>-프로젝트 내용, 시작 동기 등에 관해 적어주세요!</p> <h1>2. 모임 방식/ 진행 방법</h1> <p>-모임을 1주일에 몇 번 정도 진행할 지 적어주세요!</p><p>-모임 진행을 희망하는 요일을 적어주세요!</p><p>-모임 진행 방식에 대해 상세히 적어주세요!</p> <h1>3. 그 외 자유 작성 사항</h1>",
       // "<h1>1. 프로젝트 주제</h1> <h3>    -프로젝트 내용, 시작 동기 등에 관해 적어주세요!</h3><br><br><h1>2. 모임 방식/ 진행 방법</h1> <h3>    -모임을 1주일에 몇 번 정도 진행할 지 적어주세요!</h3><br><h3>    -모임 진행을 희망하는 요일을 적어주세요!</h3><br><h3>    -모임 진행 방식에 대해 상세히 적어주세요!</h3><br><br><h1>3. 그 외 자유 작성 사항</h1>"
-      //  "1. 프로젝트 주제  2. 모임 방식/ 진행 방법 3.그 외 자유 작성 사항"
       PROJECT_DESC: "",
       MAIN_AREA_CODE: "",
-      SUB_AREA_CODE: ""
+      SUB_AREA_CODE: "",
+      isWarranty: null
     };
   },
   setup() {},
@@ -364,7 +365,7 @@ export default {
         this.EXP_PERIOD === 0 ||
         this.DEPT_LIST.length === 0 ||
         this.PROGRESS_METHOD === "" ||
-        this.WARRANTY === "" ||
+        this.isWarranty === null ||
         this.STACKS === "" ||
         this.MEETING_URL === ""
       ) {
@@ -382,7 +383,8 @@ export default {
               stack_code: this.STACKS.join(),
               project_contact: this.MEETING_URL,
               project_desc: this.PROJECT_DESC,
-              warranty: parseInt(this.WARRANTY),
+              warranty:
+                this.isWarranty === "true" ? parseInt(this.WARRANTY) : -1,
               leader_dept: this.LEADER_DEPT_NAME
             }
           }
@@ -403,7 +405,8 @@ export default {
               stack_code: this.STACKS.join(),
               project_contact: this.MEETING_URL,
               project_desc: this.PROJECT_DESC,
-              warranty: parseInt(this.WARRANTY),
+              warranty:
+                this.isWarranty === "true" ? parseInt(this.WARRANTY) : -1,
               leader_dept: this.LEADER_DEPT_NAME
             }
           }
