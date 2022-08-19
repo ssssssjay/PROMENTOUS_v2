@@ -29,7 +29,12 @@
           <SearchAll @search-keyword="SearchKeyword" />
         </div>
       </div>
-      <div v-if="projects[0] === undefined" class="project-empty">
+      <!-- 리스트 or 로딩컴포넌트 or 에러메세지 -->
+      <div v-if="error">에러입니다</div>
+      <div v-else-if="!isLoaded">
+        <LoadingComponent />
+      </div>
+      <div v-else-if="projects[0] === undefined" class="project-empty">
         <div class="col-md-auto emptyProject">
           <img class="" src="@/img/emptyProject.jpg" alt="" />
           <p>원하시는 조건에 맞는 모집 공고가 없습니다!!</p>
@@ -49,6 +54,8 @@ import RecruitStatus from "@/components/layouts/RecruitStatus.vue";
 import CardList from "@/components/CardList.vue";
 import RegisterbtnLayout from "../components/layouts/RegisterbtnLayout.vue";
 import PaginationLayout from "@/components/layouts/PaginationLayout.vue";
+import LoadingComponent from "@/components/layouts/LoadingComponent.vue";
+
 export default {
   components: {
     // RecruitSortLayout,
@@ -58,7 +65,8 @@ export default {
     RecruitStatus,
     CardList,
     RegisterbtnLayout,
-    PaginationLayout
+    PaginationLayout,
+    LoadingComponent
   },
   computed: {
     user() {
@@ -71,11 +79,13 @@ export default {
       SUB_AREA_CODE: "",
       stacks: [],
       btnText: "모집글 작성",
-      page: 1, // 총 페이지
+      page: null, // 총 페이지
       projects: [],
       pageToMove: 1, // 이동할 페이지
       recruitStatus: "REC",
-      keyword: ""
+      keyword: "",
+      error: null,
+      isLoaded: false
     };
   },
   setup() {},
@@ -90,39 +100,48 @@ export default {
     },
     sendValue(data) {
       this.stacks = data;
+      this.isLoaded = false;
       this.getProjectsData();
     },
     SendLargeCity(data) {
       this.MAIN_AREA_CODE = data;
+      this.isLoaded = false;
       this.getProjectsData();
     },
     SendRestCity(data) {
       this.SUB_AREA_CODE = data;
+      this.isLoaded = false;
       this.getProjectsData();
     },
     SearchKeyword(data) {
       this.keyword = data;
+      this.isLoaded = false;
       this.getProjectsData();
     },
     async getProjectsData() {
-      const response = await this.$post(`/project/recruit/`, {
-        param: {
-          page: this.pageToMove,
-          status: this.recruitStatus,
-          stacks: this.stacks,
-          main_area: this.MAIN_AREA_CODE,
-          rest_area: this.SUB_AREA_CODE,
-          keyword: this.keyword
-        }
-      });
-      this.page = Math.ceil(Math.ceil(response.data.count[0].cnt / 8));
-      this.projects = response.data.projectRecruitList;
-      this.projects.forEach((project) => {
-        project.exp_start_date = this.convertDate(project.exp_start_date);
-        project.stack_code = this.convertStack(project.stack_code);
-        project.status_code = this.convertStatus(project.status_code);
-      });
-      console.log(response.data);
+      try {
+        const response = await this.$post(`/project/recruit/`, {
+          param: {
+            page: this.pageToMove,
+            status: this.recruitStatus,
+            stacks: this.stacks,
+            main_area: this.MAIN_AREA_CODE,
+            rest_area: this.SUB_AREA_CODE,
+            keyword: this.keyword
+          }
+        });
+        this.isLoaded = true;
+        this.page = Math.ceil(Math.ceil(response.data.count[0].cnt / 8));
+        this.projects = response.data.projectRecruitList;
+        this.projects.forEach((project) => {
+          project.exp_start_date = this.convertDate(project.exp_start_date);
+          project.stack_code = this.convertStack(project.stack_code);
+          project.status_code = this.$setStatusText(project.status_code);
+        });
+        console.log(response.data);
+      } catch (error) {
+        this.error = error;
+      }
     },
     convertDate(raw_date) {
       return raw_date.substr(0, 10);
@@ -130,19 +149,14 @@ export default {
     convertStack(raw_stack) {
       return raw_stack.split(",").map(String);
     },
-    convertStatus(raw_status) {
-      if (raw_status === "REC") {
-        return "모집중";
-      } else if (raw_status === "FIN") {
-        return "모집완료";
-      }
-    },
     statusSort(status) {
       this.recruitStatus = status;
+      this.isLoaded = false;
       this.getProjectsData();
     },
     paging(data) {
       this.pageToMove = data;
+      this.isLoaded = false;
       this.getProjectsData();
     }
   }
