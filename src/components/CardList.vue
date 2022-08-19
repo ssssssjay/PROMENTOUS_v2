@@ -101,14 +101,12 @@ export default {
 .project_list {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 24px;
+  gap: 24px 48px;
+  /* row-gap: 24px; */
 }
 .project_list .card {
   border-radius: 15px;
   width: 18rem;
-  /* max-height: 253px; */
-  /* overflow: hidden; */
-  margin-right: 48px;
   cursor: pointer;
   transition: all 0.3s;
   position: relative;
@@ -123,9 +121,6 @@ export default {
   width: 100%;
   height: 298.5px;
   background-color: rgba($color: #fff, $alpha: 0.5);
-}
-.project_list .card:nth-child(4n) {
-  margin-right: 0;
 }
 .project_list .card:hover {
   transform: translateY(-4px);
