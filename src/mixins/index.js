@@ -11,7 +11,7 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    /** AXIOS 용 **/
+    /* AXIOS function*/
     async $get(url) {
       return (
         await axios.get(url).catch((e) => {
@@ -38,6 +38,14 @@ export default {
       return await axios.patch(url, data).catch((e) => {
         console.log(e);
       });
+    },
+    /* common function */
+    $setStatusText(status_code) {
+      if (status_code === "REC") {
+        return "모집중";
+      } else if (status_code === "FIN") {
+        return "모집완료";
+      }
     }
   }
 };
