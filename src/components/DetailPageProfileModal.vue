@@ -20,10 +20,10 @@
           <div class="mt-2 h4">
             {{ leaderData.user_nickname }}
           </div>
-          <!-- <div>
+          <div>
             <i class="bi bi-star-fill pro_star_color"></i>
             {{ averageRate }} ({{ memberData.rating.length }})
-          </div> -->
+          </div>
         </div>
 
         <div class="col-6 text-start px-4">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
+      <div class="row mt-5">
         <hr />
         <br />
         <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
@@ -53,7 +53,7 @@
           </div>
         </div>
         <hr />
-      </div> -->
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
@@ -169,10 +169,10 @@
           <div class="mt-2 h4">
             {{ memberData.user_nickname }}
           </div>
-          <!-- <div>
+          <div>
             <i class="bi bi-star-fill pro_star_color"></i>
             {{ averageRate }} ({{ memberData.rating.length }})
-          </div> -->
+          </div>
         </div>
 
         <div class="col-6 text-start px-4">
@@ -181,7 +181,7 @@
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
+      <div class="row mt-5">
         <hr />
         <br />
         <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
@@ -202,7 +202,7 @@
           </div>
         </div>
         <hr />
-      </div> -->
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
