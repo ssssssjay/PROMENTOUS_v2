@@ -405,7 +405,10 @@
             </div>
           </div>
         </div>
-
+        {{ teamMembers[0].rating[0].rated }}
+        {{ FinishMemberRating }}
+        <hr />
+        {{ sessionUserId }}
         <TeamRatingModal
           ref="modal"
           :content="modalContent"
@@ -878,17 +881,12 @@ export default {
     },
     filterFinishMemberRating() {
       this.FinishMemberRating = [];
-
-      console.log(this.teamMembers.length);
       for (let i = 0; i < this.teamMembers.length; i++) {
-        console.log("============================");
-        console.log(this.teamMembers[i].rating);
-        if (this.teamMembers[i].rating.rated != "") {
-          if (this.teamMembers[i].rating.rated == "no") {
-            this.FinishMemberRating.push(this.teamMembers[i]);
-          }
-        } else {
-          this.FinishMemberRating.push([]);
+        if (
+          this.teamMembers[i].rating[0].comment.length == 0 &&
+          this.teamMembers[i].userId !== this.sessionUserId
+        ) {
+          this.FinishMemberRating.push(this.teamMembers[i]);
         }
       }
     },
@@ -979,7 +977,7 @@ export default {
         this.teamMembers = array;
       }
       this.teamMembers = this.teamTotalInfo.data.members;
-      // this.filterFinishMemberRating();
+      this.filterFinishMemberRating();
       this.mentoring = this.teamTotalInfo.data.mentorings;
       this.filterFinishMentoring();
     }

@@ -46,6 +46,10 @@ export default {
       } else if (status_code === "FIN") {
         return "모집완료";
       }
+    },
+    goToMenu(path) {
+      this.$router.push({ path: path });
+      /**/
     }
   }
 };
