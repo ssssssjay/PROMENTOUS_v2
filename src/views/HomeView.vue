@@ -45,7 +45,6 @@
       </button>
     </div>
     <!-- 캐러셀 -->
-
     <!-- 상단 : 프로젝트 리스트 -->
     <div class="container">
       <div class="row mt-5">
