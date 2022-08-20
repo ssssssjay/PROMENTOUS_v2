@@ -11,39 +11,42 @@
           <div class="mt-2 h4">
             {{ applicantData.userNickname }}
           </div>
-          <!-- <div>
-              <i class="bi bi-star-fill pro_star_color"></i>
-              {{ averageRate }} ({{ applicantData.rating.length }})
-            </div> -->
+          <div>
+            <i class="bi bi-star-fill pro_star_color"></i>
+            {{ averageRate }} ({{ applicantData.rating.length }})
+          </div>
         </div>
         <div class="col text-start px-4">
           <p class="h2"><strong>자기소개</strong></p>
-          <p class="h5" :key="i" v-html="this.applicantData.userIntro"></p>
+          <p
+            class="h5 intro"
+            :key="i"
+            v-html="this.applicantData.userIntro"></p>
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
-          <hr />
-          <br />
-          <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
-          <div class="col" style="height: 180px; overflow: auto">
-            <div
-              data-bs-spy="scroll"
-              data-bs-target="#list-example"
-              data-bs-offset="0"
-              class="scrollspy-example"
-              tabindex="0">
-              <h4
-                id="list-item-1"
-                :key="i"
-                v-for="(rate, i) in applicantData.rating">
-                <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
-                <span>{{ rate.comment }}</span>
-              </h4>
-            </div>
+      <div class="row mt-5">
+        <hr />
+        <br />
+        <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
+        <div class="col" style="height: 180px; overflow: auto">
+          <div
+            data-bs-spy="scroll"
+            data-bs-target="#list-example"
+            data-bs-offset="0"
+            class="scrollspy-example"
+            tabindex="0">
+            <h4
+              id="list-item-1"
+              :key="i"
+              v-for="(rate, i) in applicantData.rating">
+              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
+              <span>{{ rate.comment }}</span>
+            </h4>
           </div>
-          <hr />
-        </div> -->
+        </div>
+        <hr />
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
@@ -165,19 +168,19 @@
           <div class="mt-2 h4">
             {{ memberData.userNickname }}
           </div>
-          <!-- <div>
+          <div>
             <i class="bi bi-star-fill pro_star_color"></i>
             {{ averageRate }} ({{ memberData.rating.length }})
-          </div> -->
+          </div>
         </div>
 
         <div class="col text-start px-4">
           <p class="h2"><strong>자기소개</strong></p>
-          <p class="h5" :key="i" v-html="this.memberData.userIntro"></p>
+          <p class="h5 intro" :key="i" v-html="this.memberData.userIntro"></p>
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
+      <div class="row mt-5">
         <hr />
         <br />
         <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
@@ -198,7 +201,7 @@
           </div>
         </div>
         <hr />
-      </div> -->
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
@@ -395,5 +398,9 @@ button.btn.btn-primary {
   color: #1379d2;
   font-size: 20px;
   font-weight: bold;
+}
+.intro {
+  overflow: auto;
+  height: 200px;
 }
 </style>
