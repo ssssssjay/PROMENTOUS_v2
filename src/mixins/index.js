@@ -50,6 +50,14 @@ export default {
     goToMenu(path) {
       this.$router.push({ path: path });
       /**/
+    },
+    $formatDate(datetime) {
+      // TODO: 예외처리 코드 보완 필요
+      if (!datetime) {
+        // console.log("datetime undefined error 처리 필요");
+        return "";
+      }
+      return datetime.substr(0, 10);
     }
   }
 };
