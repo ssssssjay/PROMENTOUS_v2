@@ -199,7 +199,7 @@ export default {
 .card-title {
   font-weight: 700;
 }
-.card-text ::v-deep * {
+.card-text :deep(*) {
   color: black !important;
   font-size: 1rem;
   line-height: 1.8rem;

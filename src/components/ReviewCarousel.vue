@@ -190,7 +190,7 @@ h2::after {
   box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.pro_carousel_text ::v-deep * {
+.pro_carousel_text :deep(*) {
   font-size: 1rem;
 }
 
