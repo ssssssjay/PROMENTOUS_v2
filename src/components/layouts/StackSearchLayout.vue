@@ -14,12 +14,11 @@
   </div>
 </template>
 <script>
+import StackSearch from "@vueform/multiselect";
+
 export default {
   components: {
     StackSearch
-  },
-  props: {
-    stacks: Object
   },
   data() {
     return {
@@ -35,49 +34,24 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    transStacks() {
-      this.value = [];
-      // Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'length')
-      for (let i = 0; i < this.stacks.length; i++) {
-        for (let j = 0; j < this.options.length; j++) {
-          if (
-            this.stacks.length != 0 &&
-            this.options[j].label == this.stacks[i]
-          ) {
-            this.value.push(this.options[j].value);
-          }
-        }
-      }
-    },
     async getStackList() {
       const stackList = await this.$get(
         `http://localhost:3000/common/stackList`
       );
       console.log(stackList);
-      console.log(stackList);
-      console.log(stackList);
       for (let i = 0; i < stackList.length; i++) {
-        // value, label
-        // let data = new Stack(
-        //   stackList[i].code_data_name,
-        //   stackList[i].code_data_desc
-        // );
         let data = {
           value: stackList[i].code_data_name,
           label: stackList[i].code_data_desc
         };
         this.options.push(data);
       }
-      this.transStacks();
-      // console.log(this.options);
     },
     transValue() {
       this.$emit("send-value", this.value);
-      console.log(this.value);
     }
   }
 };
-import StackSearch from "@vueform/multiselect";
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
