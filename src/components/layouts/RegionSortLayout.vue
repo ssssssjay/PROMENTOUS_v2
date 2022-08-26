@@ -27,6 +27,9 @@
 import LargeRegionSort from "@vueform/multiselect";
 import RestRegionSort from "@vueform/multiselect";
 export default {
+  props: {
+    onlineSort: Object
+  },
   components: {
     LargeRegionSort,
     RestRegionSort
@@ -35,12 +38,15 @@ export default {
     return {
       selectedLargeCity: "",
       selectedRestCity: "",
-      largeCityData: [{ value: "ON", label: "온라인" }],
+      largeCityData: [],
       restCityData: []
     };
   },
   setup() {},
   created() {
+    if (this.onlineSort !== undefined) {
+      this.largeCityData.push(this.onlineSort);
+    }
     this.getLargeCityData();
   },
   mounted() {},

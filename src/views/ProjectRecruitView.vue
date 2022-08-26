@@ -11,6 +11,7 @@
         class="d-flex pb-5 align-items-start justify-content-between section_first">
         <div class="d-flex">
           <RegionSortLayout
+            :onlineSort="onlineSort"
             @send-LargeCity="SendLargeCity"
             @send-RestCity="SendRestCity" />
           <RecruitStatus @status-sort="statusSort" />
@@ -85,7 +86,8 @@ export default {
       recruitStatus: "REC",
       keyword: "",
       error: null,
-      isLoaded: false
+      isLoaded: false,
+      onlineSort: { value: "ON", label: "온라인" }
     };
   },
   setup() {},
@@ -134,20 +136,14 @@ export default {
         this.page = Math.ceil(Math.ceil(response.data.count[0].cnt / 8));
         this.projects = response.data.projectRecruitList;
         this.projects.forEach((project) => {
-          project.exp_start_date = this.convertDate(project.exp_start_date);
-          project.stack_code = this.convertStack(project.stack_code);
+          project.exp_start_date = this.$formatDate(project.exp_start_date);
+          project.stack_code = project.stack_code.split(","); // string to arr
           project.status_code = this.$setStatusText(project.status_code);
         });
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         this.error = error;
       }
-    },
-    convertDate(raw_date) {
-      return raw_date.substr(0, 10);
-    },
-    convertStack(raw_stack) {
-      return raw_stack.split(",").map(String);
     },
     statusSort(status) {
       this.recruitStatus = status;
