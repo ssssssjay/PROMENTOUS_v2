@@ -1,29 +1,5 @@
 <template>
   <div class="container mt-5">
-    <!-- leader정보 {{ this.projectLeader }}
-    {{ leaderDept }}
-    <hr />
-    멤버 정보{{ this.currentMemberList[1] }} 멤버 정보{{
-      this.currentMemberList[2]
-    }}
-
-    <hr />
-
-    <hr />
-    {{ partIndex }} // {{ memberIndex }}
-    <hr />
-    {{ memberValue }}
-    <hr />
-    {{ memberValue.url_list }} -->
-    <!-- {{
-      Object.values(this.currentMemberList)[this.partIndex][this.memberIndex]
-        .like_dept_code
-    }}
-    <hr />
-    teamDept {{ TeamDept }} -->
-
-    <!-- <hr /> -->
-
     <ProfileModal
       ref="modal"
       :leaderStack="this.leaderStack"
@@ -103,7 +79,7 @@
                 <span v-for="url in refUrl" :key="url.ref_url_id">
                   <a
                     target="_blank"
-                    :href="`https://${url.url_address}`"
+                    :href="`${url.url_address}`"
                     class="rev_router_link_color">
                     <button type="button" class="btn btn-sm me-2 pro_button">
                       {{ url.url_title }}
@@ -169,7 +145,10 @@
                   {{ projectLeader.user_nickname }}
                 </p>
                 <!-- TODO: 별점 연결 -->
-                <p><i class="bi bi-star-fill pro_star_color"></i> 4.5/5 (23)</p>
+                <p>
+                  <i class="bi bi-star-fill pro_star_color"></i>
+                  {{ rateAverage }}/({{ rateLength }})
+                </p>
               </div>
             </div>
             <div class="ps-1">
@@ -309,6 +288,9 @@ export default {
 
   data() {
     return {
+      userRateData: [],
+      rateAverage: 0,
+      rateLength: 0,
       TeamDept: [],
       leaderCheck: true,
       memberIndex: 0,
@@ -477,6 +459,7 @@ export default {
       this.partToArray();
       console.log("this.projectLeader");
       console.log(this.projectLeader);
+      this.getRateData();
     },
     //모집상세글----- 팀원 정보 가져오기
     async getCurrentMembers() {
@@ -557,6 +540,22 @@ export default {
         // console.log("지원 가능");
         return;
       }
+    },
+    // 평판데이터
+    async getRateData() {
+      this.userRateData = [];
+      const RateData = await this.$get(
+        `http://127.0.0.1:3000/user/rate/${this.projectLeader.user_id}}`
+      );
+      this.userRateData.push(RateData);
+      this.rateAverage = 0;
+      this.Rate = 0;
+      for (let i = 0; i < this.userRateData[0].length; i++) {
+        this.Rate += this.userRateData[0][i].rate;
+      }
+      this.rateAverage = (this.Rate / this.userRateData[0].length).toFixed(1);
+      this.rateLength = 0;
+      this.rateLength = this.userRateData[0].length;
     }
     //       /* eslint-disable */
     //   let flag = confirm("저장하시겠습니까? ");

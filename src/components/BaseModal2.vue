@@ -49,7 +49,7 @@ export default {
     position: relative;
     min-height: 400px;
     max-height: 90vh;
-    max-width: 70vw;
+    max-width: 60vw;
     padding: 1.5rem;
     overflow-y: auto;
   }

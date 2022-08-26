@@ -6,51 +6,8 @@
         <p class="des">팀 상태 및 공유링크를 확인하고 팀원/멘토를 평가해요</p>
       </div>
     </section>
-
     <section class="container">
-      <!-- <hr />
-
-      applicants ////
-      <div>{{ this.applicants }}</div>
-      <hr />
-      teamMembers //// {{ this.teamMembers }}
-      <hr />
-      {{ this.teamTotalInfo.data }}
-      <hr />
-
-      <hr /> -->
-
-      <!-- <div>//지원자정보 (배열)>> 팀선택시변경되어야</div> -->
-
-      <!-- <div>멘토정보 (배열)>> 팀선택시변경되어야</div>
-      <div>{{ this.mentoring }}</div>
-      <div>팀상태</div>
-      <div>{{ this.teamStatusList }}</div>
-      <div><br /></div>
-      <div><br /></div>
-      <div><br /></div>-->
-
-      <!--<div>{{ typeof this.projectList }}</div>
-      <div>{{ this.projectList[0] }}</div>
-      <div><br /></div>
-      <div><br /></div>
-      <div>프로젝트리스트2</div>
-      <div>{{ this.projectList2 }}</div>
-      <div>{{ typeof this.projectList2 }}</div>
-      <div>{{ this.projectList2[0] }}</div>-->
-      <!-- <div>{{ this.teamTotalInfo.data }}</div>
-      <hr />
-      <div>{{ this.applicants }}</div>
-
-      {{ teamStatus }}
-      {{ teamStatusName }} -->
-
-      <!-- <div>//팀원 (배열)>> 팀선택시변경되어야</div> -->
-
-      <!--
-      <div>멘토정보 (배열)>> 팀선택시변경되어야</div> -->
-
-      <div class="row">
+      <div class="row" v-show="!correctionMode">
         <div class="col select d-inline-block">
           <div class="d-flex select">
             <Status
@@ -112,127 +69,109 @@
           <!--저장하기 -->
         </div>
 
-        <!-- 팀모임링크 -->
-        <!-- ////////////////////////////////////////////////////////// -->
-        <div class="row p-2 mb-5 bd-highlight teamUrl">
-          <div class="tab-title">팀모임 링크</div>
-          <span
-            class="url showurl form-control"
-            v-show="correctionMode === false"
-            style="width: 500px">
-            <span class="me-3">링크제목</span>
-            <span>{{ urlTitle }}</span>
-          </span>
-          <span class="col url m-0" v-show="correctionMode">
-            <div class="input-group">
-              <span class="input-group-text">링크제목</span>
-              <input
-                type="text"
-                aria-label="First name"
-                class="form-control"
-                v-model="urlTitle" />
+        <div class="col">
+          <div class="content">
+            <div class="h4 px-2" style="text-align: left">
+              <p class="row title-tab">
+                <span class="tab-title col-2">팀 STATUS</span>
+                <span class="px-4 col-4 tab-des"
+                  ><TeamStatus
+                    class="TeamStatusSelect col-3"
+                    v-model="teamStatus"
+                    placeholder="팀상태를 선택해주세요"
+                    :options="[
+                      { value: 'REC', label: '모집중' },
+                      { value: 'ING', label: '모집완료' },
+                      { value: 'ADD', label: '추가모집' },
+                      { value: 'FIN', label: '활동종료' }
+                    ]"
+                    v-show="correctionMode === true" />
+                  <button
+                    class="btn btn-primary statusname"
+                    v-show="
+                      correctionMode === false && this.teamStatusName != ''
+                    ">
+                    {{ teamStatusName }}
+                  </button></span
+                >
+                <span class="tab-title col-2">시작일</span>
+                <span class="px-4 col-4 tab-des"
+                  ><Datepicker
+                    v-model="actualStartDate"
+                    :enableTimePicker="false"
+                    utc
+                    v-show="correctionMode" />
+                  <p v-show="correctionMode === false" class="">
+                    {{ actualStartDate.slice(0, 10) }}
+                  </p></span
+                >
+              </p>
+              <p class="row title-tab">
+                <span class="tab-title col-2"> 보증금</span>
+                <span class="px-4 col-4 tab-des"
+                  ><input
+                    type="number"
+                    class="deposit form-control"
+                    v-model="deposit"
+                    v-show="correctionMode" />
+                  <div class="deposit" v-show="correctionMode === false">
+                    {{ deposit }}원
+                  </div></span
+                >
+                <span class="tab-title col-2">모집글 링크</span>
+                <span class="px-4 col tab-des"
+                  ><span class="col url text-start">
+                    <router-link
+                      target="_blank"
+                      :to="this.path"
+                      style="text-decoration: none; color: #1379d2"
+                      ><strong
+                        @click="goToProjectDetail(this.selectedProjectId)">
+                        모집글 링크로
+                      </strong></router-link
+                    >
+                  </span></span
+                >
+              </p>
+
+              <p class="row title-tab">
+                <span class="tab-title col-2">팀모임 링크</span>
+                <span class="px-4 col tab-des">
+                  <span v-if="!correctionMode">
+                    <span class="me-3">{{ urlTitle }} </span>
+                    <a
+                      :href="this.urlAddress"
+                      target="_blank"
+                      class="urlAddress"
+                      >{{ urlAddress }}</a
+                    >
+                  </span>
+
+                  <span v-if="correctionMode">
+                    <span class="input-group" style="width: 800px">
+                      <span class="input-group-text">링크제목</span>
+                      <input
+                        type="text"
+                        aria-label="First name"
+                        class="form-control me-3"
+                        v-model="urlTitle" />
+                      <span class="input-group-text">URL</span>
+                      <input
+                        type="text"
+                        aria-label="First name"
+                        class="form-control"
+                        v-model="urlAddress" />
+                    </span>
+                  </span>
+                </span>
+              </p>
             </div>
-          </span>
-          <span
-            class="url showurl form-control"
-            v-show="correctionMode === false"
-            style="width: 500px">
-            <span class="me-3">URL</span>
-            <span>{{ urlAddress }}</span>
-          </span>
-          <span class="col url m-0" v-show="correctionMode">
-            <div class="input-group">
-              <span class="input-group-text">URL</span>
-              <input
-                type="text"
-                aria-label="First name"
-                class="form-control"
-                v-model="urlAddress" />
-            </div>
-          </span>
-        </div>
-
-        <!-- ---------------------------------------------------------------------------------------------- -->
-        <!-- 팀 STATUS -->
-
-        <div class="p-2 mb-5 d-inline-flex bd-highlight TeamStatus">
-          <div class="tab-title">팀 STATUS</div>
-          <TeamStatus
-            class="TeamStatusSelect"
-            v-model="teamStatus"
-            placeholder="팀상태를 선택해주세요"
-            :options="[
-              { value: 'REC', label: '모집중' },
-              { value: 'ING', label: '모집완료' },
-              { value: 'ADD', label: '추가모집' },
-              { value: 'FIN', label: '활동종료' }
-            ]"
-            v-show="correctionMode === true" />
-
-          <button class="btn btn-primary" v-show="correctionMode === false">
-            {{ teamStatusName }}
-          </button>
-        </div>
-        <!-- ---------------------------------------------------------------------------------------------- -->
-        <!-- 진행기간 -->
-        <div class="p-2 d-inline-flex mb-5 bd-highlight">
-          <div class="tab-title">시작일</div>
-
-          <input
-            type="datetime-local"
-            class="datepicker"
-            v-model="actualStartDate"
-            v-show="correctionMode === true" />
-
-          <p v-show="correctionMode === false" class="">
-            {{ actualStartDate.slice(0, 10) }}
-          </p>
-        </div>
-        <!-- ---------------------------------------------------------------------------------------------- -->
-        <!-- 보증금 -->
-        <div class="p-2 mb-5 d-inline-flex bd-highlight">
-          <div class="tab-title">보증금</div>
-          <input
-            type="number"
-            class="deposit form-control"
-            v-model="deposit"
-            v-show="correctionMode" />
-          <div class="deposit" v-show="correctionMode === false">
-            {{ deposit }}원
           </div>
         </div>
 
         <!-- ---------------------------------------------------------------------------------------------- -->
-        <!-- 모집글 링크 -->
-        <div class="row p-2 mb-5 bd-highlight">
-          <div class="tab-title">모집글 링크</div>
-          <span class="col url text-start">
-            <router-link
-              target="_blank"
-              :to="this.path"
-              style="text-decoration: none; color: #1379d2"
-              ><strong @click="goToProjectDetail(this.selectedProjectId)">
-                모집글 링크로
-              </strong></router-link
-            >
-          </span>
-        </div>
-
-        <!-- <router-link
-          target="_blank"
-          :to="this.path"
-          style="text-decoration: none; color: #1379d2"
-          ><strong @click="goToProjectDetail(this.selectedProjectId)">
-            모집글 링크로
-          </strong></router-link
-        > -->
-        <!-- ---------------------------------------------------------------------------------------------- -->
         <!-- 지원자관리  -->
 
-        <ApplicantProfileModal
-          ref="modal4"
-          :content="modalContent"
-          :applicantData="this.applicants[this.memberIndex]" />
         <div class="applicantPage p-2 mb-5 d-inline-flex bd-highlight">
           <div class="tab-title">지원자관리</div>
 
@@ -247,46 +186,61 @@
               class="row applicantList bg"
               v-show="this.applicants[0] != null">
               <div
-                class="applicant text-center card m-2"
-                style="width: 240px"
+                class="applicantCard text-start card m-2"
                 :key="index"
                 v-for="(app, index) in applicants">
-                <img
-                  v-bind:src="app.userImage"
-                  class="card-img-top m-2 userImage"
-                  alt="..."
-                  @click="
-                    [handleClick3(), transIndex(index), applicantModal()]
-                  " />
+                <div class="profile">
+                  <img v-bind:src="app.userImage" class="userImage" alt="..." />
+                  <p class="applicantNickname">
+                    {{ app.applicantNickname }}
+                  </p>
+                  <p class="Dept">{{ app.applyDeptCode }}</p>
+                  <button
+                    class="goToProfile"
+                    @click="
+                      [
+                        transIndex(index),
+                        getApplicantRateData(),
+                        handleClick3(),
+                        applicantModal()
+                      ]
+                    ">
+                    프로필 보기
+                  </button>
+                </div>
 
-                <h5 class="card-title applicantNickname">
-                  {{ app.applicantNickname }}
-                </h5>
+                <ul class="content">
+                  <li class="mb-3">
+                    <i class="bi bi-envelope-fill me-2"></i
+                    >{{ app.applicantAccount }}
+                  </li>
+                  <li class="mb-3">
+                    <i class="bi bi-calendar-fill me-2"></i>
+                    {{ app.insertDate.substr(0, 10) }}
+                  </li>
 
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item applicantAccount">
-                    이메일 {{ app.applicantAccount }}
-                  </li>
-                  <li class="list-group-item insertDate">
-                    신청일시 {{ app.insertDate.substr(0, 10) }}
-                  </li>
-                  <li class="list-group-item">
-                    신청분야
-                    <button class="btn btn-primary">
-                      {{ app.applyDeptCode }}
-                    </button>
-                  </li>
-                  <li class="row list-group-item likeStackCode">
-                    관심스택
-                    <br />
-                    <div>
-                      <button
-                        class="btn m-1 btn-primary Stack"
-                        :key="i"
-                        v-for="(stack, i) in applicants[index].likeStackCode">
-                        {{ stack }}
-                      </button>
-                    </div>
+                  <li class="row likeStackCode">
+                    <span v-show="applicants[index].likeStackCode != null">
+                      <i class="bi bi-bookmark-check-fill">
+                        <button
+                          class="btn m-1 btn-primary Stack"
+                          :key="i"
+                          v-for="(stack, i) in userStackCode[index]">
+                          {{ stack }}
+                        </button>
+                        <span
+                          v-show="
+                            applicants[index].likeStackCode != null &&
+                            applicants[index].likeStackCode.length > 3
+                          ">
+                          +{{ userStackNumber[index] }}
+                        </span>
+                      </i>
+                    </span>
+                    <span v-show="applicants[index].likeStackCode == null">
+                      <i class="bi bi-bookmark-check-fill me-2"> </i>
+                      <span>등록된 관심스택이 없습니다</span>
+                    </span>
                   </li>
                 </ul>
                 <div class="card-body">
@@ -326,8 +280,13 @@
           ref="modal3"
           :memberData="this.teamMembers[this.memberIndex]"
           :applicantData="this.applicants[this.memberIndex]"
+          :applicantRate="this.applicantRate"
+          :applicantAverageRate="this.applicantAverageRate"
+          :memberRate="this.memberRate"
+          :memberAverageRate="this.memberAverageRate"
           :modalData="this.ModalData" />
-        <div class="p-2 mb-5 d-inline-flex bd-highlight">
+
+        <div class="mb-5 p-2 d-inline-flex bd-highlight">
           <div class="memberText">
             <div class="tab-title">팀원정보</div>
             <div class="memberRating">
@@ -350,65 +309,85 @@
           <div class="row">
             <div class="row applicantList bg">
               <div
-                class="applicant text-center card"
-                style="width: 240px"
+                class="applicantCard text-start card m-2"
                 :key="index"
-                v-for="(mem, index) in teamMembers">
-                <img
-                  v-bind:src="mem.userImage"
-                  class="card-img-top mt-2 userImage"
-                  alt="..."
-                  @click="
-                    [handleClick3(), transIndex(index), teamMemberModal()]
-                  " />
+                v-for="(app, index) in teamMembers">
+                <div class="profile">
+                  <img v-bind:src="app.userImage" class="userImage" alt="..." />
+                  <p class="applicantNickname">
+                    {{ app.userNickname }}
+                  </p>
+                  <p class="Dept">{{ app.role }}</p>
+                  <button
+                    class="goToProfile"
+                    @click="
+                      [
+                        handleClick3(),
+                        transIndex(index),
+                        teamMemberModal(),
+                        getMemberRateData()
+                      ]
+                    ">
+                    프로필 보기
+                  </button>
+                </div>
 
-                <h5 class="card-title applicantNickname">
-                  {{ mem.userNickname }}
-                </h5>
-
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item applicantAccount">
-                    이메일
-                    {{ mem.memberEmail }}
+                <ul class="content">
+                  <li class="mb-3">
+                    <i class="bi bi-envelope-fill me-2"></i
+                    >{{ app.memberEmail }}
                   </li>
 
-                  <li class="list-group-item">
-                    역할
-                    <button class="btn btn-primary role">
-                      {{ mem.role }}
-                    </button>
-                  </li>
-                  <li class="list-group-item userSocialUrl">
-                    소셜링크
-                    <a
-                      href="{{url.address}}"
-                      :key="index0"
-                      v-for="(url, index0) in teamMembers[index].userSocialUrl"
-                      >{{ url.title }}<br />
-                    </a>
-                  </li>
-                  <li class="row list-group-item" style="height: 120px">
-                    관심스택
-                    <br />
-                    <div>
+                  <li class="row likeStackCode">
+                    <span v-show="teamMembers[index].likeStackCode != null">
+                      <i class="bi bi-bookmark-check-fill me-2"></i>
                       <button
                         class="btn m-1 btn-primary Stack"
                         :key="i"
-                        v-for="(stack, i) in teamMembers[index].likeStackCode"
-                        v-show="stack.length > 0">
+                        v-for="(stack, i) in memberStackCode[index]">
                         {{ stack }}
                       </button>
-                    </div>
+                      <span
+                        v-show="
+                          teamMembers[index].likeStackCode != null &&
+                          teamMembers[index].likeStackCode.length > 3
+                        ">
+                        +{{ memberStackNumber[index] }}
+                      </span>
+                    </span>
+
+                    <span v-show="teamMembers[index].likeStackCode == null">
+                      <i class="bi bi-bookmark-check-fill me-2"> </i>
+                      <span>등록된 관심스택이 없습니다</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span v-show="teamMembers[index].userSocialUrl.length > 0">
+                      <i class="bi bi-globe me-1"></i>
+                      <a
+                        class="url me-2"
+                        :href="url.address"
+                        target="_blank"
+                        :key="index0"
+                        style="text-decoration: none"
+                        v-for="(url, index0) in teamMembers[index]
+                          .userSocialUrl"
+                        >{{ url.title }}
+                      </a>
+                    </span>
+                    <span
+                      class="emptyUrl"
+                      v-show="teamMembers[index].userSocialUrl.length == 0">
+                      <i class="bi bi-globe me-1"></i> 등록된 소셜링크가
+                      없습니다
+                    </span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        {{ teamMembers[0].rating[0].rated }}
-        {{ FinishMemberRating }}
-        <hr />
-        {{ sessionUserId }}
+
         <TeamRatingModal
           ref="modal"
           :content="modalContent"
@@ -530,6 +509,7 @@ import { ref } from "vue";
 import TeamRatingModal from "@/components/TeamRatingModal.vue";
 // import MentorRatingModal from "@/components/MentorRatingModal.vue";
 import TeamMemberProfileModal from "@/components/UserProfileModal.vue";
+import Datepicker from "@vuepic/vue-datepicker";
 
 export default {
   name: "App",
@@ -539,7 +519,8 @@ export default {
     TeamStatus,
     RegisterbtnLayout,
     TeamRatingModal,
-    TeamMemberProfileModal
+    TeamMemberProfileModal,
+    Datepicker
   },
   computed: {
     user() {
@@ -548,10 +529,21 @@ export default {
   },
   data() {
     return {
+      memberStackCode: [],
+      memberStackNumber: [],
+      userStackCode: [],
+      userStackNumber: [],
+      Rate: 0,
+      applicantAverageRate: 0,
+      applicantRate: [[]],
+      memberAverageRate: 0,
+      memberRate: [[]],
+      memberList: [],
+      applicantList: [],
       ModalData: "empty",
       path: "",
       //db작업 x 변수
-      teamStatusName: "",
+      teamStatusName: "모집중",
       memberIndex: 0,
       teamRatingColor: "#ddee4d",
       mentorRatingColor: "#1379d2",
@@ -560,7 +552,7 @@ export default {
       btnText2: "저장하기",
       FinishMentoring: [],
       FinishMemberRating: [],
-      actualStartDate: "2022-07-18T11:32",
+      actualStartDate: "2022-08-20",
       selectedStatus: "",
 
       datetime: "2011-08-03tdst324324234234",
@@ -725,6 +717,7 @@ export default {
         this.teamStatusName = "활동종료";
       }
     },
+
     async saveTeamInfo() {
       /* eslint-disable */
       let flag = confirm("저장하시겠습니까? ");
@@ -879,6 +872,7 @@ export default {
         }
       }
     },
+
     filterFinishMemberRating() {
       this.FinishMemberRating = [];
       for (let i = 0; i < this.teamMembers.length; i++) {
@@ -916,6 +910,91 @@ export default {
     stringToArray(string) {
       return string.split(",");
     },
+    async getApplicantRateData() {
+      this.applicantRate = [];
+      const RateData = await this.$get(
+        `http://127.0.0.1:3000/user/rate/${
+          this.applicantList[this.memberIndex]
+        }`
+      );
+      this.applicantRate.push(RateData);
+      this.applicantAverageRate = 0;
+      this.Rate = 0;
+      for (let i = 0; i < this.applicantRate[0].length; i++) {
+        this.Rate += this.applicantRate[0][i].rate;
+        console.log(this.Rate);
+      }
+      this.applicantAverageRate = (
+        this.Rate / this.applicantRate[0].length
+      ).toFixed(1);
+    },
+    filterApplicantRate() {
+      this.applicantList = [];
+      for (let i = 0; i < this.applicants.length; i++) {
+        this.applicantList.push(this.applicants[i].applicantId);
+      }
+    },
+    async getMemberRateData() {
+      this.memberRate = [];
+      const RateData = await this.$get(
+        `http://127.0.0.1:3000/user/rate/${this.memberList[this.memberIndex]}`
+      );
+      this.memberRate.push(RateData);
+      this.memberAverageRate = 0;
+      this.Rate = 0;
+      for (let i = 0; i < this.memberRate[0].length; i++) {
+        this.Rate += this.memberRate[0][i].rate;
+        console.log(this.Rate);
+      }
+      this.memberAverageRate = (this.Rate / this.memberRate[0].length).toFixed(
+        1
+      );
+    },
+    filterMemberRate() {
+      this.memberList = [];
+      for (let i = 0; i < this.teamMembers.length; i++) {
+        this.memberList.push(this.teamMembers[i].userId);
+      }
+    },
+    filterStackCode() {
+      this.userStackCode = [];
+      this.memberStackCode = [];
+      this.userStackNumber = [];
+      this.memberStackNumber = [];
+
+      for (let i = 0; i < this.applicants.length; i++) {
+        if (
+          this.applicants[i].likeStackCode == null ||
+          this.applicants[i].likeStackCode.length < 3
+        ) {
+          this.userStackCode.push(this.applicants[i].likeStackCode);
+          this.userStackNumber.push(0);
+        } else if (this.applicants[i].likeStackCode.length > 3) {
+          this.userStackCode.push(this.applicants[i].likeStackCode.slice(0, 2));
+          this.userStackNumber.push(
+            this.applicants[i].likeStackCode.length - 2
+          );
+        }
+      }
+
+      for (let j = 0; j < this.teamMembers.length; j++) {
+        if (
+          this.teamMembers[j].likeStackCode == null ||
+          this.teamMembers[j].likeStackCode.length < 3
+        ) {
+          this.memberStackCode.push(this.teamMembers[j].likeStackCode);
+          this.memberStackNumber.push(0);
+        } else if (this.teamMembers[j].likeStackCode.length > 3) {
+          this.memberStackCode.push(
+            this.teamMembers[j].likeStackCode.slice(0, 2)
+          );
+          this.memberStackNumber.push(
+            this.teamMembers[j].likeStackCode.length - 2
+          );
+        }
+      }
+    },
+
     // 페이지 클릭시점에 멘토링정보 끌고오는 메서드
     //  DB에서 받은 정보는 :: this.mentoring 에 꽃힌다
     async getMentoringsBySelectedPage() {
@@ -980,6 +1059,9 @@ export default {
       this.filterFinishMemberRating();
       this.mentoring = this.teamTotalInfo.data.mentorings;
       this.filterFinishMentoring();
+      this.filterApplicantRate();
+      this.filterMemberRate();
+      this.filterStackCode();
     }
   },
   /*팀개요화면에서 튕겨나가기 */
@@ -993,6 +1075,18 @@ export default {
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style>
+a {
+  color: black;
+}
+ul {
+  padding: 0px;
+}
+.urlAddress {
+  display: inline-block;
+}
+.tab-des {
+  font-size: 18px;
+}
 .multiselect.is-active {
   box-shadow: 0 0 0 var(--ms-ring-width, 3px) var(--ms-ring-color, #1379d2);
 }
@@ -1021,6 +1115,7 @@ export default {
   font-size: 20px;
   font-weight: bold;
   width: 150px;
+  padding: 0px;
 }
 .ProjectSelect {
   border: 1px solid #d1d5db;
@@ -1061,9 +1156,53 @@ div.title {
   font-size: 30px;
   margin-top: 10px;
 }
-.applicantAccount {
-  height: 90px;
+.applicantNickname {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
 }
+
+/* 유저카드 */
+
+.profile {
+}
+.userImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 10px;
+}
+.applicantCard {
+  display: flex;
+  border-radius: 15px;
+  border: 3px solid #dce8f3;
+  height: 500px;
+  width: 260px;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.applicantCard:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+.Dept {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+.goToProfile {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.content {
+}
+
 section.container {
   margin-bottom: 10px;
 }
@@ -1078,13 +1217,12 @@ div.register {
   margin: 10px;
 }
 span.url.showurl {
-  width: 300px;
   margin: 0px 10px;
 }
-.url {
-  width: 300px;
-  margin: 0px;
+.urlTtitle {
+  width: 100px;
 }
+
 .url > span:first-child {
   font-size: 14px;
 }
@@ -1110,7 +1248,7 @@ div.applicantList {
   font-size: 12px;
 }
 .likeStackCode {
-  height: 150px;
+  height: 50px;
 }
 .List {
   max-width: 950px;
@@ -1131,6 +1269,7 @@ div.col.mentoring {
   align-items: center;
   position: relative;
 }
+
 .List > div {
   height: auto;
   --bs-gutter-x: auto;
@@ -1216,17 +1355,15 @@ p.form-control {
 }
 .applicantPage {
   width: 1300px;
-  height: 650px;
+  height: 550px;
 }
 .emptyApplicant {
   width: 700px;
   height: 400px;
 }
 .row.applicantList.bg {
-  background-color: gainsboro;
   width: 1300px;
-  height: 650px;
-  padding: 10px;
+  height: 550px;
 }
 .mentoringText {
   position: relative;
@@ -1244,8 +1381,14 @@ p.form-control {
   width: 100px;
   left: -10px;
 }
-.userImage {
-  width: 200px;
-  height: 150px;
+
+.statusname {
+  width: 100px;
+}
+.title-tab:first-child {
+  margin: 0px 0px 35px 0px;
+}
+.title-tab {
+  margin: 70px 0px;
 }
 </style>

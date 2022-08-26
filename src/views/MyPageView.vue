@@ -3,17 +3,6 @@
     <div class="row">
       <!-- 페이지우측  -->
       <div class="col">
-        <!-- {{ this.selectedOptionList }}
-        <hr />
-        {{ this.optionList }}
-        <hr />
-        {{ this.partList }}
-        <hr />
-        part : {{ this.parts }}
-        <hr />
-        stacks : {{ this.stacks }}
-        <hr /> -->
-
         <div class="content text-start">
           <!-- 글 제목 -->
           <div class="h1"><strong>내 정보</strong></div>
@@ -35,12 +24,12 @@
                 <textarea
                   class="form-control text-muted"
                   id="exampleFormControlTextarea1"
-                  rows="3"
+                  rows="6"
                   v-model="user.selfInfo"></textarea>
               </p>
             </div>
           </div>
-          <div class="mt-3" style="height: 30px">
+          <div class="mt-3 mb-3" style="height: 30px">
             <p class="row" style="vertical-align: middle">
               <span class="col-2 text-center" v-show="infoStatus"
                 ><strong>{{ user.nickname }}</strong></span
@@ -55,29 +44,24 @@
               <span class="col-2 text-start">
                 <button id="bt" class="btn btn-outline-dark">
                   <i class="bi bi-star-fill pro_star_color"></i
-                  >{{ user.score }}/({{ user.scoreCount }})
+                  >{{ rateAverage }}/({{ rateLength }})
                 </button></span
-              >|
-              <span class="col-2 text-center"><strong>멘토평판</strong></span>
+              >|<span class="col-2 text-center"
+                ><strong>로그인 계정</strong></span
+              >
+              <span class="col-2">{{ user.googleAccount }}</span>
+              <!-- <span class="col-2 text-center"><strong>멘토평판</strong></span>
               <span class="col-2 text-start"
                 ><button id="bt" class="btn btn-outline-dark">
                   <i class="bi bi-star-fill pro_star_color"></i>
                   {{ user.mentoScore }}/({{ user.mentoScoreCount }})
                 </button></span
-              >
+              > -->
             </p>
             <hr />
           </div>
           <!-- 글 내용 하단 -->
           <div class="h5 py-3">
-            <p class="row py-4 mb-5 mt-5">
-              <span class="col-2 text-center"
-                ><strong>로그인 계정</strong></span
-              >
-              <span class="col-10 text-start px-4">{{
-                user.googleAccount
-              }}</span>
-            </p>
             <p class="row py-4 mb-4">
               <span class="col-2 text-center"><strong>관심분야</strong></span>
               <span class="col px-3">
@@ -201,6 +185,10 @@ export default {
   components: { PartSearchLayout, StackSearchLayout },
   data() {
     return {
+      userRateData: [],
+      rateAverage: 0,
+      rateLength: 0,
+      Rate: 0,
       user: {
         nickname: "닉네임",
         score: 3.5,
@@ -279,6 +267,7 @@ export default {
   },
   mounted() {
     this.getUserData();
+    this.getRateData();
   },
   updated() {},
   unmounted() {},
@@ -376,6 +365,21 @@ export default {
     goToHome(path) {
       window.scrollTo(0, 0);
       this.$router.push({ path: path });
+    },
+    async getRateData() {
+      this.userRateData = [];
+      const RateData = await this.$get(
+        `http://127.0.0.1:3000/user/rate/${this.userId}`
+      );
+      this.userRateData.push(RateData);
+      this.rateAverage = 0;
+      this.Rate = 0;
+      for (let i = 0; i < this.userRateData[0].length; i++) {
+        this.Rate += this.userRateData[0][i].rate;
+      }
+      this.rateAverage = (this.Rate / this.userRateData[0].length).toFixed(1);
+      this.rateLength = 0;
+      this.rateLength = this.userRateData[0].length;
     }
   }
 };
@@ -423,8 +427,8 @@ div > .tag {
 }
 
 #to {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: auto;
+  height: 200px;
+  font-size: 18px;
 }
 </style>
