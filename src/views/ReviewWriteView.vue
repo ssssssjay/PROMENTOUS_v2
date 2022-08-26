@@ -108,14 +108,12 @@
             </div>
           </div>
         </div>
-        <div class="row mb-5">
-          <text-editor :contents="contents" @send-EditorData="sendEditorData" />
-        </div>
+        <text-editor :contents="contents" @send-EditorData="sendEditorData" />
+        <registerbtn-layout
+          class="regBtn"
+          :btnText="btnText"
+          @click="insertReview" />
       </form>
-      <registerbtn-layout
-        class="regBtn"
-        :btnText="btnText"
-        @click="insertReview" />
     </div>
   </div>
 </template>
@@ -135,11 +133,6 @@ export default {
   },
   data() {
     return {
-      // USER_PROJECT_TITLE: [
-      //   "자바스크립트로 만드는 웹사이트 ",
-      //   "VUE,NODE 프로젝트만들기",
-      //   "파이썬으로 만드는 TODO-LIST"
-      // ],
       URL: { title: "", address: "" },
       URL_LIST: [],
       UrlAdd: "",
@@ -147,7 +140,8 @@ export default {
       REVIEW_DESC: "",
       SELECTED_PROJECT_ID: 0,
       SELECTED_PROJECT_TITLE: "",
-      contents: "",
+      contents:
+        "<p>프로젝트의 설명이나, 진행하면서 느낀점 등을 자유로이 작성해주세요!</p>",
       btnText: "작성 완료",
       imgPrevSrc: "",
       USER_HISTORY: []
@@ -265,7 +259,10 @@ export default {
   color: var(--ms-option-color-selected-pointed, #fff);
 }
 .regBtn {
-  float: right;
+  /* float: right; */
+  display: flex;
+  justify-content: end;
+  margin-top: 64px;
 }
 .title {
   font-size: 40px;
