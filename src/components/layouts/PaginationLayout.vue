@@ -13,8 +13,8 @@
         <li class="page-item" v-for="(data, index) in page" :key="index">
           <button
             class="page-link"
-            @click="$emit('paging', data)"
-            style="color: #0bc0eb">
+            :class="data === selected ? 'page-to-move' : ''"
+            @click="$emit('paging', data), paging(data)">
             {{ data }}
           </button>
         </li>
@@ -36,13 +36,28 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      selected: 1
+    };
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    paging(data) {
+      this.selected = data;
+    }
+  }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.page-link {
+  color: #a4abbd;
+}
+.page-to-move {
+  color: #fff;
+  background-color: #1379d2;
+  border: 1px solid #1379d2;
+}
+</style>

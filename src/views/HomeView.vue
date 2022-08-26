@@ -85,7 +85,7 @@
               min-height: 400px;
               max-height: 400px;
             "
-            v-for="(mentor, index) in mentors2"
+            v-for="(mentor, index) in mentors"
             :key="index"
             @click="goToMentorDetail(`/mentordetail/${mentor.user_id}`)">
             <div class="card-title text-center mt-4 mb-0">
@@ -98,8 +98,8 @@
               <h2 class="fs-5 mt-0">
                 <strong>{{ mentor.user_nickname }}</strong>
               </h2>
-              <i class="bi bi-star-fill pro_star_color"></i>{{ rate1[index] }} /
-              ({{ rate2[index] }})
+              <i class="bi bi-star-fill pro_star_color"></i>
+              <span> {{ mentor.rateAVG }} / ({{ mentor.rateCount }}) </span>
 
               <div class="text">
                 <p class="card-text">
@@ -132,11 +132,8 @@ export default {
   components: { CardList },
   data() {
     return {
-      rate1: [3.7, 4.6, 4.9, 3.2, 4, 2.7],
-      rate2: [12, 43, 5, 10, 34, 20],
-      mentors: [],
       projects: [],
-      mentors2: []
+      mentors: []
     };
   },
   created() {
@@ -146,33 +143,26 @@ export default {
   methods: {
     async getProjectData() {
       const response = await this.$get("http://localhost:3000/project/recruit");
-      console.log(response);
+      // console.log(response);
       this.projects = response;
       this.projects.forEach((project) => {
-        project.status_code = this.isPossible(project.status_code);
-        project.exp_start_date = this.expDate(project.exp_start_date);
+        project.status_code = this.$setStatusText(project.status_code);
+        project.exp_start_date = this.$formatDate(project.exp_start_date);
       });
     },
     async getMentorData() {
       const response2 = await this.$get("http://localhost:3000/mentor");
-      console.log(response2);
-      this.mentors2 = response2;
+      // console.log(response2);
+      this.mentors = response2;
+      this.mentors.forEach((mentor) => {
+        // Number를 생략하면 '... is not a function'오류가 발생. forEach라는게 형변환을 일으키는지...?
+        mentor.rateAVG = Number(mentor.rateAVG).toFixed(1);
+      });
     },
     goToMentorDetail(path) {
       window.scrollTo(0, 0);
       this.$router.push({ path: path });
       /**/
-    },
-
-    isPossible(status) {
-      if (status === "REC") {
-        return "모집중";
-      } else if (status === "FIN") {
-        return "모집완료";
-      }
-    },
-    expDate(date) {
-      return date.substring(0, 10);
     }
   }
 };

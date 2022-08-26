@@ -226,14 +226,12 @@
             </div>
           </div>
         </div>
-        <div class="row mb-5">
-          <text-editor :contents="CONTENTS" @send-EditorData="sendEditorData" />
-        </div>
+        <text-editor :contents="CONTENTS" @send-EditorData="sendEditorData" />
+        <registerbtn-layout
+          class="regBtn"
+          :btnText="btnText"
+          @click="insertProject" />
       </form>
-      <registerbtn-layout
-        class="regBtn"
-        :btnText="btnText"
-        @click="insertProject" />
     </div>
   </div>
 </template>
@@ -437,7 +435,10 @@ export default {
 </script>
 <style scoped>
 .regBtn {
-  float: right;
+  /* float: right; */
+  display: flex;
+  justify-content: end;
+  margin-top: 64px;
 }
 .title {
   font-size: 40px;

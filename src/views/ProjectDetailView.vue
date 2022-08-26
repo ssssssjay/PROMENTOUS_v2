@@ -55,7 +55,7 @@
               </strong>
             </span>
             <span class="text-end col-2 pt-3">
-              {{ formatDate(project.created_datetime) }}
+              {{ $formatDate(project.created_datetime) }}
             </span>
             <hr />
           </div>
@@ -65,7 +65,7 @@
               <span class="text-muted col-2 pro_font_bold">| 시작예정일</span>
               <span class="px-4 col-4">
                 <!-- {{ project.exp_start_date.substr(0, 10) }} -->
-                {{ formatDate(project.exp_start_date) }}
+                {{ $formatDate(project.exp_start_date) }}
               </span>
               <span class="text-muted col-2 pro_font_bold">| 진행기간</span>
               <span class="px-4 col-4">{{ project.exp_period }} 개월</span>
@@ -423,29 +423,11 @@ export default {
       }
     },
 
-    formatDate(datetime) {
-      // TODO: 예외처리 코드 보완 필요
-      if (!datetime) {
-        // console.log("datetime undefined error 처리 필요");
-        return "";
-      }
-      return datetime.substr(0, 10);
-    },
-
     setWarrantyText(warranty) {
       if (warranty === -1) {
         return "X";
       } else {
         return warranty + " 원";
-      }
-    },
-
-    setStatusText(status_code) {
-      // const statusText = "";
-      if (status_code === "REC") {
-        return "모집중";
-      } else if (status_code === "FIN") {
-        return "모집완료";
       }
     },
 
@@ -471,10 +453,8 @@ export default {
     async getProjectData() {
       this.project = await this.$get(`/project/recruit/${this.projectId}`);
 
-      this.project.stack_code = await this.project.stack_code
-        .split(",")
-        .map(String); // string to array
-      this.recruitStatus = await this.setStatusText(this.project.status_code);
+      this.project.stack_code = await this.project.stack_code.split(","); // string to array
+      this.recruitStatus = await this.$setStatusText(this.project.status_code);
       this.warrantyText = await this.setWarrantyText(this.project.warranty);
       this.progressMethod = await this.setProgressMethodText(
         this.project.progress_method
@@ -621,7 +601,7 @@ export default {
   margin: 20px 0;
   text-align: left;
 }
-.widget-box.desc-project ::v-deep {
+.widget-box.desc-project :deep {
   border: none;
   padding: 0;
   * {
