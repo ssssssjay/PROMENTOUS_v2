@@ -9,19 +9,21 @@
             alt=""
             style="width: 120px; border-radius: 10%" />
           <div class="mt-2 h4">
-            {{ applicantData.userNickname }}
+            <strong>{{ applicantData.userNickname }}</strong>
           </div>
           <div>
             <i class="bi bi-star-fill pro_star_color"></i>
-            {{ averageRate }} ({{ applicantData.rating.length }})
+            <span v-show="this.applicantAverageRate != 'NaN'"
+              >{{ applicantAverageRate }} ({{ applicantRate[0].length }})</span
+            >
+            <span v-show="this.applicantAverageRate == 'NaN'">0 (0)</span>
           </div>
         </div>
         <div class="col text-start px-4">
           <p class="h2"><strong>자기소개</strong></p>
-          <p
-            class="h5 intro"
-            :key="i"
-            v-html="this.applicantData.userIntro"></p>
+          <p class="h5 intro">
+            {{ applicantData.userIntro }}
+          </p>
         </div>
       </div>
       <!-- 평판 부분 -->
@@ -36,13 +38,15 @@
             data-bs-offset="0"
             class="scrollspy-example"
             tabindex="0">
-            <h4
+            <p
               id="list-item-1"
               :key="i"
-              v-for="(rate, i) in applicantData.rating">
-              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
-              <span>{{ rate.comment }}</span>
-            </h4>
+              v-for="(rate, i) in applicantRate[0]"
+              v-show="applicantRate[0].length > 0">
+              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.rate }}
+              <span class="ms-3">{{ rate.rate_comment }}</span>
+            </p>
+            <p v-if="applicantRate[0] == ''">받은 평판 기록이 없습니다.</p>
           </div>
         </div>
         <hr />
@@ -166,17 +170,20 @@
             alt=""
             style="width: 120px; border-radius: 10%" />
           <div class="mt-2 h4">
-            {{ memberData.userNickname }}
+            <strong>{{ memberData.userNickname }}</strong>
           </div>
           <div>
             <i class="bi bi-star-fill pro_star_color"></i>
-            {{ averageRate }} ({{ memberData.rating.length }})
+            <span v-show="this.memberAverageRate != 'NaN'"
+              >{{ memberAverageRate }} ({{ memberRate[0].length }})</span
+            >
+            <span v-show="this.memberAverageRate == 'NaN'">0 (0)</span>
           </div>
         </div>
 
         <div class="col text-start px-4">
           <p class="h2"><strong>자기소개</strong></p>
-          <p class="h5 intro" :key="i" v-html="this.memberData.userIntro"></p>
+          <p class="h5 intro" :key="i">{{ memberData.userIntro }}</p>
         </div>
       </div>
       <!-- 평판 부분 -->
@@ -191,13 +198,15 @@
             data-bs-offset="0"
             class="scrollspy-example"
             tabindex="0">
-            <h4
+            <p
               id="list-item-1"
               :key="i"
-              v-for="(rate, i) in memberData.rating">
-              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
-              <span>{{ rate.comment }}</span>
-            </h4>
+              v-for="(rate, i) in memberRate[0]"
+              v-show="memberRate[0].length > 0">
+              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.rate }}
+              <span class="ms-3">{{ rate.rate_comment }}</span>
+            </p>
+            <p v-if="memberRate[0] == ''">받은 평판 기록이 없습니다.</p>
           </div>
         </div>
         <hr />
@@ -207,12 +216,12 @@
         <div class="row">
           <span class="col-2 h4 text-center"><strong>관심 스택</strong></span>
           <div class="col-8 h4 text-start">
-            <p class="emptyValue" v-if="memberData.likeDeptCode == null || []">
+            <p class="emptyValue" v-show="memberData.likeStackCode == null">
               등록된 관심 스택이 없습니다
             </p>
             <button
-              v-else
               class="btn m-1 btn-primary Stack"
+              v-show="memberData.likeStackCode != null"
               v-for="(stack, index) in memberData.likeStackCode"
               :key="index">
               {{ stack }}
@@ -323,25 +332,17 @@ export default {
   props: {
     memberData: Object,
     applicantData: Object,
-    modalData: String
+    modalData: String,
+    applicantRate: Array,
+    applicantAverageRate: Number,
+    memberRate: Array,
+    memberAverageRate: Number
   },
   data() {
     return {
-      averageRate: 1,
-      path: ""
-      // *userNickname
-      // *likeStackCode
-      // *userImage
-      // *userIntro
-      // *likeDeptCode
-      // {진행한 프로젝트 모집글 제목 , 모집글링크 } [{title:'',address:''}]이런식으로
-      // {작성한 리뷰 제목 , 주소}  REVIEW테이블   [{title:'',address:''}]이런식으로
-      // 소셜정보  마이페이지 URL_LIST   [{title:'',address:''}]이런식으로
-
-      // 평판 보류
-      // 평점총합/평점.length
-      // 평점.length
-      // {평점 + 평가 코멘트 }  RATE테이블  RATE /  RATE_COMMENT
+      path: "",
+      averageRate: 0,
+      Rate: 0
     };
   },
   setup() {
@@ -366,9 +367,11 @@ export default {
     };
     return { baseModal, show, confirm, cancel };
   },
+
   created() {},
   mounted() {},
   unmounted() {},
+
   methods: {
     goToProjectDetail(id) {
       window.scrollTo(0, 0);
@@ -402,5 +405,7 @@ button.btn.btn-primary {
 .intro {
   overflow: auto;
   height: 200px;
+  width: 90%;
+  font-size: 18px;
 }
 </style>

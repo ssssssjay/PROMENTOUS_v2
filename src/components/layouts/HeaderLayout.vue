@@ -92,13 +92,7 @@
             @click="onClickOpen">
             <span>로그인</span>
           </button>
-          <!-- <button
-            v-else
-            class="btn btn-outline-dark"
-            type="button"
-            @click="onClickLogout">
-            <span>로그아웃</span>
-          </button> -->
+
           <div class="loginDropdown" v-else>
             <img
               :src="user.user_image"

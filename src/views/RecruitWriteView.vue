@@ -205,7 +205,10 @@
               style="width: 500px"
               placeholder="링크 주소 ex) www.naver.com"
               v-model="URL.url_address" />
-            <button type="button" class="btn btn-secondary" @click="addUrl()">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="regUrlType(URL.url_address), addUrl()">
               추가
             </button>
           </div>
@@ -279,7 +282,10 @@ export default {
       PROJECT_DESC: "",
       MAIN_AREA_CODE: "",
       SUB_AREA_CODE: "",
-      isWarranty: null
+      isWarranty: null,
+      checkUrl: false,
+      regex:
+        /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi
     };
   },
   setup() {},
@@ -320,16 +326,30 @@ export default {
       }
     },
     addUrl() {
-      if (this.URL.url_title !== "" && this.URL.url_address !== "") {
+      if (
+        this.URL.url_title !== "" &&
+        this.URL.url_address !== "" &&
+        this.checkUrl !== false
+      ) {
         let obj0 = {
           ["url_title"]: this.URL.url_title,
-          ["url_address"]: `https://${this.URL.url_address}`
+          ["url_address"]: this.URL.url_address
         };
         this.URL_LIST.push(obj0);
         this.URL.url_title = "";
         this.URL.url_address = "";
-      } else if (this.URL.url_title === "" || this.URL.url_address === 0) {
-        alert("링크를 정확히 입력해주세요");
+      } else if (this.URL.url_title === "") {
+        alert("링크 제목을 입력해주세요");
+      } else if (this.URL.url_address === "") {
+        alert("링크 주소를 입력해 주세요");
+      } else if (this.checkUrl === false) {
+        alert("링크 양식을 https://www.naver.com 다음과 같이 작성해주세요");
+      }
+    },
+    regUrlType(data) {
+      this.checkUrl = false;
+      if (this.regex.test(data)) {
+        this.checkUrl = true;
       }
     },
 
@@ -353,21 +373,28 @@ export default {
     SendRestCity(data) {
       this.SUB_AREA_CODE = data;
     },
+
     // 온라인 요청과 오프라인 요청을 나누어서 보내준다. 우선 아래는 온라인
     async insertProject() {
       let response = [];
-      if (
-        this.LEADER_DEPT_NAME === "" ||
-        this.PROJECT_TITLE === "" ||
-        this.PROJECT_DESC === "" ||
-        this.EXP_PERIOD === 0 ||
-        this.DEPT_LIST.length === 0 ||
-        this.PROGRESS_METHOD === "" ||
-        this.isWarranty === null ||
-        this.STACKS === "" ||
-        this.MEETING_URL === ""
-      ) {
-        this.$swal("작성하지 않은 부분이 있어요!");
+      if (this.PROJECT_TITLE === "") {
+        this.$swal("프로젝트명을 작성해주세요!");
+      } else if (this.LEADER_DEPT_NAME === "") {
+        this.$swal("팀장분야를 추가해주세요!");
+      } else if (this.PROJECT_DESC === "") {
+        this.$swal("프로젝트 설명을 작성해주세요!");
+      } else if (this.EXP_PERIOD === 0) {
+        this.$swal("진행기간을 선택해주세요!");
+      } else if (this.DEPT_LIST.length === 0) {
+        this.$swal("모집인원을 작성해주세요");
+      } else if (this.PROGRESS_METHOD === "") {
+        this.$swal("진행방식을 선택해주세요!");
+      } else if (this.isWarranty === null) {
+        this.$swal("보증금여부를 선택해주세요!");
+      } else if (this.STACKS === "") {
+        this.$swal("사용기술을 선택해주세요!");
+      } else if (this.MEETING_URL === "") {
+        this.$swal("연락방법을 작성해주세요!");
       } else if (this.PROGRESS_METHOD === "ON") {
         response = await this.$post(
           `http://localhost:3000/project/recruit/insertPost`,

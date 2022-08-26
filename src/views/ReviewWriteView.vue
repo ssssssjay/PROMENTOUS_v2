@@ -87,7 +87,11 @@
               placeholder="링크 주소"
               v-model="URL.address" />
             <!-- {{ URL_LIST[0].address }} -->
-            <button type="button" class="btn btn-secondary" @click="addUrl()">
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="regUrlType(URL.address), addUrl()">
               추가
             </button>
           </div>
@@ -144,7 +148,10 @@ export default {
         "<p>프로젝트의 설명이나, 진행하면서 느낀점 등을 자유로이 작성해주세요!</p>",
       btnText: "작성 완료",
       imgPrevSrc: "",
-      USER_HISTORY: []
+      USER_HISTORY: [],
+      checkUrl: false,
+      regex:
+        /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/
     };
   },
   setup() {},
@@ -165,7 +172,11 @@ export default {
       this.PART_LIST.splice(index, 1);
     },
     addUrl() {
-      if (this.URL.title !== "" && this.URL.address !== "") {
+      if (
+        this.URL.title !== "" &&
+        this.URL.address !== "" &&
+        this.checkUrl !== false
+      ) {
         let obj0 = {
           ["title"]: this.URL.title,
           ["address"]: this.URL.address
@@ -174,13 +185,24 @@ export default {
         this.URL.title = "";
         this.URL.address = "";
         this.UrlAdd = "yes";
-      } else if (this.URL.title === "" || this.URL.address === 0) {
-        alert("링크를 정확히 입력해주세요");
+      } else if (this.URL.title === "") {
+        alert("링크 제목을 입력해주세요");
+      } else if (this.URL.address === "") {
+        alert("링크 주소를 입력해 주세요");
+      } else if (this.checkUrl === false) {
+        alert("링크 양식을 https://www.naver.com 다음과 같이 작성해주세요");
       }
     },
     delURL(index) {
       this.URL_LIST.splice(index, 1);
       this.UrlAdd = "";
+      this.checkUrl = false;
+    },
+    regUrlType(data) {
+      this.checkUrl = false;
+      if (this.regex.test(data)) {
+        this.checkUrl = true;
+      }
     },
     async imgUpload() {
       const formData = new FormData();
