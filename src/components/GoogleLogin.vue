@@ -33,7 +33,6 @@ export default {
             user_image: userData.picture
           },
           {
-            user_nickname: userData.name,
             user_image: userData.picture
           }
           // 필드명과 반드시 동일_이래야 쿼리문이 스무스함 : 내가 쏴줄 데이터값
