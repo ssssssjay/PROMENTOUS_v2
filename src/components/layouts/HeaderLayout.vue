@@ -70,18 +70,6 @@
               <span>팀관리</span>
             </a>
           </span>
-          <!-- <span class="dropdown">
-            <a
-              role="button"
-              id="dropdownMenuLink"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              :class="{ active: $route.path == '/myPageinfo' }"
-              @click="goToMenu('/myPageinfo')"
-              style="font-size: 20px">
-              <span>마이페이지</span>
-            </a>
-          </span> -->
         </div>
 
         <div class="siglog">
@@ -158,7 +146,6 @@ export default {
     return {
       modalShow: false,
       clickProfile: false
-      // userImage: this.$store.state.user.user_image
     };
   },
   computed: {
@@ -232,12 +219,7 @@ div > button {
 .dropdown > a {
   font-size: 20px;
 }
-// .logo > a {
-//   background: linear-gradient(to right, #1379d2, #49c0d0);
-//   -webkit-background-clip: text;
-//   -webkit-text-fill-color: transparent;
-//   font-size: 25px;
-// }
+
 .dropdown {
   margin: 10px;
 }

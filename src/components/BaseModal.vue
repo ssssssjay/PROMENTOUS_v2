@@ -51,6 +51,7 @@ export default {
     max-height: 500px;
     max-width: 600px;
     padding: 1.5rem;
+    border-radius: 12px;
     overflow-y: auto;
   }
   .modal-container > slot {
