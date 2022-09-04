@@ -392,110 +392,8 @@
           ref="modal"
           :content="modalContent"
           :teammember="FinishMemberRating"
-          :colors="teamRatingColor" />
-
-        <!-- ---------------------------------------------------------------------------------------------- -->
-        <!-- 멘토링  -->
-
-        <!-- <div class="p-2 mb-5 d-inline-flex bd-highlight">
-          <div class="mentoringText">
-            멘토링
-            <div class="mentorRating">
-              <button
-                class="btn btn-outline-secondary"
-                @click="handleClick2"
-                v-if="this.FinishMentoring.length > 0">
-                멘토평가
-              </button>
-              <button
-                class="btn btn-outline-secondary"
-                @click="handleClick2"
-                v-else
-                disabled>
-                멘토평가
-              </button>
-            </div>
-          </div>
-
-          <div class="List mx-5">
-            <div class="row">
-              <div
-                class="col mentoring"
-                :key="index2"
-                v-for="(men, index2) in mentoring">
-                <p class="mentoringName">
-                  {{ men.mentorUserId }}멘토님의 {{ men.mentoringTitle }}
-                </p>
-                <button class="btn btn-primary">
-                  <i class="bi bi-check-circle-fill"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus > 1">
-                  <i class="bi bi-check-circle-fill"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus == -1">
-                  <i class="bi bi-file-excel-fill"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus > 2">
-                  <i class="bi bi-check-circle-fill"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus >= 4">
-                  <i class="bi bi-check-circle-fill"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus == 5">
-                  <i class="bi bi-check-circle-fill"></i></button
-                ><button
-                  class="btn btn-primary"
-                  v-show="men.mentoringStatus != -1 && men.mentoringStatus < 5">
-                  <i class="bi bi-circle"></i>
-                </button>
-                <div class="mentoringStatus">
-                  <span>신청중 </span>
-                  <span v-show="men.mentoringStatus >= 1">승인됨</span>
-                  <span v-show="men.mentoringStatus == -1">반려됨 </span>
-                  <span v-show="men.mentoringStatus >= 2">결제진행 </span>
-                  <span v-show="men.mentoringStatus >= 3">멘토링중 </span>
-                  <span v-show="men.mentoringStatus >= 4">완료 </span>
-                </div>
-                <div class="mentoringBtn">
-                  <button
-                    class="btn btn-outline-secondary"
-                    v-show="men.mentoringStatus == 4">
-                    멘토링종료
-                  </button>
-                  <button
-                    class="btn btn-outline-secondary"
-                    v-show="men.mentoringStatus > 4"
-                    disabled>
-                    멘토링종료
-                  </button>
-                  <button
-                    class="ms-1 btn btn-outline-secondary"
-                    v-show="men.mentorRating.rated == 'yes'"
-                    disabled>
-                    평가완료
-                  </button>
-                </div>
-              </div>
-
-
-              <MentorRatingModal
-                ref="modal2"
-                :content="modalContent"
-                :mentoring="FinishMentoring"
-                :colors="mentorRatingColor" />
-            </div>
-          </div>
-        </div> -->
+          :colors="teamRatingColor"
+          :selectedProjectId="selectedProjectId" />
       </div>
     </section>
   </div>
@@ -545,7 +443,7 @@ export default {
       //db작업 x 변수
       teamStatusName: "모집중",
       memberIndex: 0,
-      teamRatingColor: "#ddee4d",
+      teamRatingColor: "#FFB800",
       mentorRatingColor: "#1379d2",
       applicantsList: [],
       btnText: "수정하기",
@@ -744,13 +642,6 @@ export default {
         );
         if (r.status === 200) {
           let temp = await this.$get(this.initUrl, {});
-          console.log(temp == null);
-          console.log(temp == {});
-          console.log(typeof temp);
-          console.log("=========initUrl 팀 리스트끌고오기 ==========");
-          console.log(this.initUrl);
-          console.log("=========가져온결과 temp==========");
-          console.log(temp);
 
           /* refresh 프로젝트 리스트    */
           this.projectList = [];
@@ -765,7 +656,6 @@ export default {
           /* refresh 프로젝트 내용   */
           this.projectIdSelect();
         }
-        console.log(this.r);
       } else {
         return;
       }
@@ -778,10 +668,7 @@ export default {
       data.project_id = this.applicantsList[index].projectId;
       data.apply_dept_id = this.applicantsList[index].applyDeptId;
       data.apply_status = this.applicantsList[index].applyStatus;
-      console.log(data);
       let r = await this.$post(`/project/recruit/projectApplyAccept`, data);
-      console.log("승인결과");
-      console.log(r);
       if (r.status === 200) {
         this.projectIdSelect(); /* refresh  */
       }
@@ -795,8 +682,6 @@ export default {
       data.apply_dept_id = this.applicantsList[index].applyDeptId;
       data.apply_status = this.applicantsList[index].applyStatus;
       let r = await this.$post(`/project/recruit/projectApplyReject`, data);
-      console.log("거절 선택result");
-      console.log(r);
       if (r.status === 200) {
         this.projectIdSelect(); /* refresh  */
       }
@@ -812,8 +697,6 @@ export default {
     },
     /*managePageInit  페이지 최초 실행 시  동작하는 로직  */
     async managePageInit() {
-      console.log("=========SESSION USERID ==========");
-      console.log(this.sessionUserId);
       // 팀STATUS 필드 셀렉박스용
       this.teamStatusList = await this.$get(
         `/common/getTeamStatusListForTeamManage/`
@@ -823,13 +706,6 @@ export default {
       this.initUrl = `/manage/getTeamListForManage/`;
       this.initUrl += this.sessionUserId;
       let temp = await this.$get(this.initUrl, {});
-      console.log(temp == null);
-      console.log(temp == {});
-      console.log(typeof temp);
-      console.log("=========initUrl 팀 리스트끌고오기 ==========");
-      console.log(this.initUrl);
-      console.log("=========가져온결과 temp==========");
-      console.log(temp);
 
       // 내연관 팀들 배열 중에서
       // 첫번째 값(DEFAULT) 으로 팀정보 다끌고오기위한 처리
@@ -883,10 +759,7 @@ export default {
           this.FinishMemberRating.push(this.teamMembers[i]);
         }
       }
-    },
-    selected() {
-      console.log("SelectedStatus : ", this.SelectedStatus);
-      console.log("SelectedProject : ", this.SelectedProject);
+      console.log(this.FinishMemberRating);
     },
     deselected() {
       this.SelectedProject = "";
@@ -922,7 +795,6 @@ export default {
       this.Rate = 0;
       for (let i = 0; i < this.applicantRate[0].length; i++) {
         this.Rate += this.applicantRate[0][i].rate;
-        console.log(this.Rate);
       }
       this.applicantAverageRate = (
         this.Rate / this.applicantRate[0].length
@@ -944,7 +816,6 @@ export default {
       this.Rate = 0;
       for (let i = 0; i < this.memberRate[0].length; i++) {
         this.Rate += this.memberRate[0][i].rate;
-        console.log(this.Rate);
       }
       this.memberAverageRate = (this.Rate / this.memberRate[0].length).toFixed(
         1
@@ -1013,11 +884,8 @@ export default {
 
     // 선택 하는 순간에 해당 project 정보 teamTotalInfo 끌어옴
     async projectIdSelect() {
-      console.log(this.selectedProjectId);
       this.projectInfoParams.project_id = this.selectedProjectId;
       // teamTotalInfo .
-      console.log(this.projectInfoParams);
-      console.log(this.projectInfoParams.project_id);
       this.teamTotalInfo = await this.$post(
         // TODO: axios.defaults.baseURL로 변경
         `/manage/getProjectInfo`,
