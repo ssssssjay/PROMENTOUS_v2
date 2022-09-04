@@ -187,6 +187,14 @@
               v-show="this.applicants[0] != null">
               <div
                 class="applicantCard text-start card m-2"
+                @click="
+                  [
+                    transIndex(index),
+                    getApplicantRateData(),
+                    handleClick3(),
+                    applicantModal()
+                  ]
+                "
                 :key="index"
                 v-for="(app, index) in applicants">
                 <div class="profile">
@@ -195,18 +203,6 @@
                     {{ app.applicantNickname }}
                   </p>
                   <p class="Dept">{{ app.applyDeptCode }}</p>
-                  <button
-                    class="goToProfile"
-                    @click="
-                      [
-                        transIndex(index),
-                        getApplicantRateData(),
-                        handleClick3(),
-                        applicantModal()
-                      ]
-                    ">
-                    프로필 보기
-                  </button>
                 </div>
 
                 <ul class="content">
@@ -220,7 +216,11 @@
                   </li>
 
                   <li class="row likeStackCode">
-                    <span v-show="applicants[index].likeStackCode != null">
+                    <span
+                      v-show="
+                        applicants[index].likeStackCode != null &&
+                        applicants[index].likeStackCode.length != 0
+                      ">
                       <i class="bi bi-bookmark-check-fill">
                         <button
                           class="btn m-1 btn-primary Stack"
@@ -237,7 +237,11 @@
                         </span>
                       </i>
                     </span>
-                    <span v-show="applicants[index].likeStackCode == null">
+                    <span
+                      v-show="
+                        applicants[index].likeStackCode == null ||
+                        applicants[index].likeStackCode.length == 0
+                      ">
                       <i class="bi bi-bookmark-check-fill me-2"> </i>
                       <span>등록된 관심스택이 없습니다</span>
                     </span>
@@ -310,6 +314,14 @@
             <div class="row applicantList bg">
               <div
                 class="applicantCard text-start card m-2"
+                @click="
+                  [
+                    handleClick3(),
+                    transIndex(index),
+                    teamMemberModal(),
+                    getMemberRateData()
+                  ]
+                "
                 :key="index"
                 v-for="(app, index) in teamMembers">
                 <div class="profile">
@@ -318,18 +330,6 @@
                     {{ app.userNickname }}
                   </p>
                   <p class="Dept">{{ app.role }}</p>
-                  <button
-                    class="goToProfile"
-                    @click="
-                      [
-                        handleClick3(),
-                        transIndex(index),
-                        teamMemberModal(),
-                        getMemberRateData()
-                      ]
-                    ">
-                    프로필 보기
-                  </button>
                 </div>
 
                 <ul class="content">
@@ -339,7 +339,11 @@
                   </li>
 
                   <li class="row likeStackCode">
-                    <span v-show="teamMembers[index].likeStackCode != null">
+                    <span
+                      v-show="
+                        teamMembers[index].likeStackCode != null &&
+                        teamMembers[index].likeStackCode.length != 0
+                      ">
                       <i class="bi bi-bookmark-check-fill me-2"></i>
                       <button
                         class="btn m-1 btn-primary Stack"
@@ -356,7 +360,11 @@
                       </span>
                     </span>
 
-                    <span v-show="teamMembers[index].likeStackCode == null">
+                    <span
+                      v-show="
+                        teamMembers[index].likeStackCode == null ||
+                        teamMembers[index].likeStackCode.length == 0
+                      ">
                       <i class="bi bi-bookmark-check-fill me-2"> </i>
                       <span>등록된 관심스택이 없습니다</span>
                     </span>
@@ -759,8 +767,8 @@ export default {
           this.FinishMemberRating.push(this.teamMembers[i]);
         }
       }
-      console.log(this.FinishMemberRating);
     },
+    selected() {},
     deselected() {
       this.SelectedProject = "";
     },
@@ -836,7 +844,7 @@ export default {
       for (let i = 0; i < this.applicants.length; i++) {
         if (
           this.applicants[i].likeStackCode == null ||
-          this.applicants[i].likeStackCode.length < 3
+          this.applicants[i].likeStackCode.length <= 3
         ) {
           this.userStackCode.push(this.applicants[i].likeStackCode);
           this.userStackNumber.push(0);
@@ -851,7 +859,7 @@ export default {
       for (let j = 0; j < this.teamMembers.length; j++) {
         if (
           this.teamMembers[j].likeStackCode == null ||
-          this.teamMembers[j].likeStackCode.length < 3
+          this.teamMembers[j].likeStackCode.length <= 3
         ) {
           this.memberStackCode.push(this.teamMembers[j].likeStackCode);
           this.memberStackNumber.push(0);
@@ -934,8 +942,6 @@ export default {
   },
   /*팀개요화면에서 튕겨나가기 */
   exitTeamManage(e) {
-    console.log("exitTeamManage 실행");
-    console.log(e);
     //alert("자신에게 해당되는 프로젝트가 없습니다. 메인 화면으로 이동합니다. ");
     // TODO : ROUTER PUSH  to main(?)
   }

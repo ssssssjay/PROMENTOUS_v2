@@ -56,9 +56,7 @@
         <div class="row">
           <span class="col-2 h4 text-center"><strong>관심 스택</strong></span>
           <div class="col-8 h4 text-start">
-            <p
-              class="emptyValue"
-              v-if="applicantData.likeStackCode == null || []">
+            <p class="emptyValue" v-if="applicantData.likeStackCode == null">
               등록된 관심 스택이 없습니다
             </p>
             <button

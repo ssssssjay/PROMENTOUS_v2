@@ -50,13 +50,6 @@
                 ><strong>로그인 계정</strong></span
               >
               <span class="col-2">{{ user.googleAccount }}</span>
-              <!-- <span class="col-2 text-center"><strong>멘토평판</strong></span>
-              <span class="col-2 text-start"
-                ><button id="bt" class="btn btn-outline-dark">
-                  <i class="bi bi-star-fill pro_star_color"></i>
-                  {{ user.mentoScore }}/({{ user.mentoScoreCount }})
-                </button></span
-              > -->
             </p>
             <hr />
           </div>
@@ -64,6 +57,7 @@
           <div class="h5 py-3">
             <p class="row py-4 mb-4">
               <span class="col-2 text-center"><strong>관심분야</strong></span>
+
               <span class="col px-3">
                 <span
                   class="stack-icon mx-2 mb-2"
@@ -77,9 +71,9 @@
                 <PartSearchLayout
                   style="float: left"
                   @send-value="addPart"
-                  ref="PartSearchRef"
                   :parts="parts"
-                  v-show="editStatus"></PartSearchLayout>
+                  v-show="editStatus"
+                  v-model="parts" />
               </span>
             </p>
             <p class="row py-4 mb-4">
@@ -130,18 +124,21 @@
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  @click="addUrl()">
+                  @click="regUrlType(URL.url_address), addUrl()">
                   추가
                 </button>
                 <div v-for="(URL, index) in URL_LIST" :key="index">
                   <div class="col partTo ms-1">
-                    <p class="form-control mb-1">
-                      {{ URL_LIST[index].url_title }}
-                    </p>
-                    <p class="form-control mb-1">
-                      {{ URL_LIST[index].url_address }}
-                    </p>
-
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 200px"
+                      v-model="URL_LIST[index].url_title" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 600px"
+                      v-model="URL_LIST[index].url_address" />
                     <button
                       type="button"
                       class="btn btn-secondary"
@@ -155,6 +152,7 @@
 
             <hr />
             <p class="text-end">
+              <!-- 저장 -->
               <button
                 type="button"
                 class="btn btn-dark btn-lg"
@@ -162,6 +160,7 @@
                 @click="[changeStatus1(), passData()]">
                 {{ this.buttonStatus }}
               </button>
+              <!-- 수정 -->
               <button
                 type="button"
                 class="btn btn-outline-dark btn-lg"
@@ -185,10 +184,13 @@ export default {
   components: { PartSearchLayout, StackSearchLayout },
   data() {
     return {
+      checkUrl: false,
       userRateData: [],
       rateAverage: 0,
       rateLength: 0,
       Rate: 0,
+      regex:
+        /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
       user: {
         nickname: "닉네임",
         score: 3.5,
@@ -217,36 +219,14 @@ export default {
       selectedOptionList: [],
       optionList: [],
 
-      // stacks: [
-      //   {
-      //     stackCode: "1",
-      //     label: "프론트엔드",
-      //     options: ["Javascript", "TypeScript", "React"]
-      //   },
-      //   {
-      //     stackCode: "2",
-      //     label: "백엔드",
-      //     options: ["Java", "Spring", "Node.js"]
-      //   },
-      //   {
-      //     stackCode: "3",
-      //     label: "모바일",
-      //     options: ["Flutter", "Swift", "Kotlin"]
-      //   },
-      //   {
-      //     stackCode: "4",
-      //     label: "기타",
-      //     options: ["AWS", "Kubernetes", "Docker"]
-      //   }
-      // ],
       partList: [
         { partCode: "01", partName: "프론트엔드" },
         { partCode: "02", partName: "백엔드" },
         { partCode: "03", partName: "모바일" },
         { partCode: "04", partName: "기타" }
       ],
-      parts: [1, 1, 1, 1, 1],
-      stacks: [2, 2, 2, 2, 2],
+      parts: [],
+      stacks: [],
       selectedPart: "",
       selectedStackList: [3, 3, 3, 3, 3],
       stackList: [4, 4, 4, 4, 4, 4],
@@ -300,18 +280,31 @@ export default {
       this.editStatus = true;
       this.buttonStatus = "저장";
     },
+    regUrlType(data) {
+      this.checkUrl = false;
+      if (this.regex.test(data)) {
+        this.checkUrl = true;
+      }
+    },
     addUrl() {
-      if (this.URL.url_title !== "" && this.URL.url_address !== "") {
+      if (
+        this.URL.url_title !== "" &&
+        this.URL.url_address !== "" &&
+        this.checkUrl !== false
+      ) {
         let obj0 = {
           ["url_title"]: this.URL.url_title,
           ["url_address"]: this.URL.url_address
         };
-
         this.URL_LIST.push(obj0);
         this.URL.url_title = "";
         this.URL.url_address = "";
-      } else if (this.URL.url_title === "" || this.URL.url_address === 0) {
-        alert("링크를 정확히 입력해주세요");
+      } else if (this.URL.url_title === "") {
+        alert("링크 제목을 입력해주세요");
+      } else if (this.URL.url_address === "") {
+        alert("링크 주소를 입력해 주세요");
+      } else if (this.checkUrl === false) {
+        alert("링크 양식을 https://www.naver.com 다음과 같이 작성해주세요");
       }
     },
     delURL(index) {
@@ -320,6 +313,7 @@ export default {
     addPart(data) {
       this.parts = data;
     },
+
     addStack2(data) {
       this.stacks = data;
     },
