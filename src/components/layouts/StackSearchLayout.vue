@@ -38,7 +38,6 @@ export default {
       const stackList = await this.$get(
         `http://localhost:3000/common/stackList`
       );
-      console.log(stackList);
       for (let i = 0; i < stackList.length; i++) {
         let data = {
           value: stackList[i].code_data_name,

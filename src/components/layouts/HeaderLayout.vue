@@ -107,12 +107,7 @@
                     @click="goToMenu(`/myPageinfo/${user.user_id}`)"
                     ><i class="bi bi-gear me-2 mb-2"></i>마이페이지</a
                   >
-                  <a
-                    class="notice"
-                    :class="{ active: $route.path == '/MentoringAdmin' }"
-                    @click="goToMenu('/MentoringAdmin')"
-                    ><i class="bi bi-bell me-2 mb-2"></i>멘토링 알림
-                  </a>
+
                   <a @click="onClickLogout" class="logout">
                     <i class="bi bi-box-arrow-right me-2"></i>
                     로그아웃

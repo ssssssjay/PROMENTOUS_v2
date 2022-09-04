@@ -8,7 +8,7 @@
       :create-option="true"
       :groups="false"
       :options="options"
-      @click="transValue"
+      @click="transValue()"
       placeholder="멘토의 분야를 선택해보세요!" />
   </div>
 </template>
@@ -58,19 +58,6 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    transPart() {
-      this.value = [];
-      for (let i = 0; i < this.parts.length; i++) {
-        for (let j = 0; j < this.options.length; j++) {
-          if (
-            this.parts.length != 0 &&
-            this.options[j].label == this.parts[i]
-          ) {
-            this.value.push(this.options[j].value);
-          }
-        }
-      }
-    },
     transValue() {
       this.$emit("send-value", this.value);
     }

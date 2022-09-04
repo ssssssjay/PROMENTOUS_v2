@@ -20,10 +20,13 @@
           <div class="mt-2 h4">
             {{ leaderData.user_nickname }}
           </div>
-          <!-- <div>
+          <div>
             <i class="bi bi-star-fill pro_star_color"></i>
-            {{ averageRate }} ({{ memberData.rating.length }})
-          </div> -->
+            <span v-show="this.leaderRateAverage != 0"
+              >{{ leaderRateAverage }} ({{ leaderRate[0].length }})</span
+            >
+            <span v-show="this.leaderRateAverage == 0">0 (0)</span>
+          </div>
         </div>
 
         <div class="col text-start px-4">
@@ -32,7 +35,7 @@
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
+      <div class="row mt-5">
         <hr />
         <br />
         <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
@@ -43,17 +46,19 @@
             data-bs-offset="0"
             class="scrollspy-example"
             tabindex="0">
-            <h4
+            <p
               id="list-item-1"
               :key="i"
-              v-for="(rate, i) in leaderData.rating">
-              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
-              <span>{{ rate.comment }}</span>
-            </h4>
+              v-for="(rate, i) in leaderRate[0]"
+              v-show="leaderRate[0].length > 0">
+              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.rate }}
+              <span class="ms-3">{{ rate.rate_comment }}</span>
+            </p>
+            <p v-show="leaderRate[0] == ''">받은 평판 기록이 없습니다.</p>
           </div>
         </div>
         <hr />
-      </div> -->
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
@@ -169,10 +174,13 @@
           <div class="mt-2 h4">
             {{ memberData.user_nickname }}
           </div>
-          <!-- <div>
+          <div>
             <i class="bi bi-star-fill pro_star_color"></i>
-            {{ averageRate }} ({{ memberData.rating.length }})
-          </div> -->
+            <span v-show="this.memberRateAverage != 0"
+              >{{ memberRateAverage }} ({{ memberRate[0].length }})</span
+            >
+            <span v-show="this.memberRateAverage == 0">0 (0)</span>
+          </div>
         </div>
 
         <div class="col text-start px-4">
@@ -181,7 +189,7 @@
         </div>
       </div>
       <!-- 평판 부분 -->
-      <!-- <div class="row mt-5">
+      <div class="row mt-5">
         <hr />
         <br />
         <div class="col-2 h4 text-center"><strong>최근 평판</strong></div>
@@ -192,17 +200,19 @@
             data-bs-offset="0"
             class="scrollspy-example"
             tabindex="0">
-            <h4
+            <p
               id="list-item-1"
               :key="i"
-              v-for="(rate, i) in memberData.rating">
-              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.score }}
-              <span>{{ rate.comment }}</span>
-            </h4>
+              v-for="(rate, i) in memberRate[0]"
+              v-show="memberRate[0].length > 0">
+              <i class="bi bi-star-fill pro_star_color"></i> {{ rate.rate }}
+              <span class="ms-3">{{ rate.rate_comment }}</span>
+            </p>
+            <p v-show="memberRate[0] == ''">받은 평판 기록이 없습니다.</p>
           </div>
         </div>
         <hr />
-      </div> -->
+      </div>
       <!-- 관심 정보 -->
       <div class="info mt-5">
         <div class="row">
@@ -325,9 +335,13 @@ export default {
     leaderDept: Object,
     leaderData: Object,
     leaderStack: Object,
+    leaderRate: Array,
+    memberRate: Array,
     memberData: Object,
     leaderCheck: Boolean,
-    teamDept: Array
+    teamDept: Array,
+    leaderRateAverage: Number,
+    memberRateAverage: Number
   },
   data() {
     return {

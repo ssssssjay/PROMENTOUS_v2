@@ -5,6 +5,10 @@
       :leaderStack="this.leaderStack"
       :leaderDept="this.leaderDept"
       :leaderData="this.projectLeader"
+      :leaderRate="this.leaderRateData"
+      :leaderRateAverage="this.leaderRateAverage"
+      :memberRate="this.memberRateData"
+      :memberRateAverage="this.memberRateAverage"
       :memberData="this.memberValue"
       :leaderCheck="this.leaderCheck"
       :teamDept="this.TeamDept" />
@@ -145,9 +149,10 @@
                   {{ projectLeader.user_nickname }}
                 </p>
                 <!-- TODO: 별점 연결 -->
+
                 <p>
                   <i class="bi bi-star-fill pro_star_color"></i>
-                  {{ rateAverage }}/({{ rateLength }})
+                  {{ leaderRateAverage }}/({{ leaderRateLength }})
                 </p>
               </div>
             </div>
@@ -172,7 +177,7 @@
               <button
                 type="button"
                 class="btn btn-sm me-2 pro_button"
-                @click="[leaderModal(), handleClick()]">
+                @click="[leaderModal(), handleClick(), getLeaderRateData()]">
                 상세보기
               </button>
             </div>
@@ -252,7 +257,8 @@
                           transIndex(index0),
                           saveMemberValues(),
                           memberModal(),
-                          saveTeamDept()
+                          saveTeamDept(),
+                          getLeaderRateData()
                         ]
                       ">
                       상세정보
@@ -288,9 +294,13 @@ export default {
 
   data() {
     return {
-      userRateData: [],
-      rateAverage: 0,
-      rateLength: 0,
+      memberId: 0,
+      leaderRateData: [[]],
+      memberRateData: [[]],
+      leaderRateAverage: 0,
+      leaderRateLength: 0,
+      memberRateAverage: 0,
+      memberRateLength: 0,
       TeamDept: [],
       leaderCheck: true,
       memberIndex: 0,
@@ -388,8 +398,12 @@ export default {
         this.memberValue = Object.values(this.currentMemberList)[
           this.partIndex
         ][this.memberIndex];
+        this.memberId = Object.values(this.currentMemberList)[this.partIndex][
+          this.memberIndex
+        ].applicant_id;
       }
     },
+
     stackToArray() {
       if (this.projectLeader.like_stack_code.length == 1) {
         this.leaderStack.push(this.projectLeader.like_stack_code);
@@ -457,9 +471,9 @@ export default {
       this.projectLeader.project = this.projectLeader.leaderHistory;
       this.stackToArray();
       this.partToArray();
+      this.getLeaderRateData();
       console.log("this.projectLeader");
       console.log(this.projectLeader);
-      this.getRateData();
     },
     //모집상세글----- 팀원 정보 가져오기
     async getCurrentMembers() {
@@ -542,20 +556,40 @@ export default {
       }
     },
     // 평판데이터
-    async getRateData() {
-      this.userRateData = [];
-      const RateData = await this.$get(
-        `http://127.0.0.1:3000/user/rate/${this.projectLeader.user_id}}`
-      );
-      this.userRateData.push(RateData);
-      this.rateAverage = 0;
-      this.Rate = 0;
-      for (let i = 0; i < this.userRateData[0].length; i++) {
-        this.Rate += this.userRateData[0][i].rate;
+    async getLeaderRateData() {
+      if (this.leaderCheck == true) {
+        this.leaderRateData = [];
+        const RateData = await this.$get(
+          `http://127.0.0.1:3000/user/rate/${this.projectLeader.user_id}}`
+        );
+        this.leaderRateData.push(RateData);
+        this.leaderRateAverage = 0;
+        this.Rate = 0;
+        for (let i = 0; i < this.leaderRateData[0].length; i++) {
+          this.Rate += this.leaderRateData[0][i].rate;
+        }
+        this.leaderRateAverage = (
+          this.Rate / this.leaderRateData[0].length
+        ).toFixed(1);
+        this.leaderRateLength = 0;
+        this.leaderRateLength = this.leaderRateData[0].length;
+      } else if (this.leaderCheck == false) {
+        this.memberRateData = [];
+        const RateData0 = await this.$get(
+          `http://127.0.0.1:3000/user/rate/${this.memberId}}`
+        );
+        this.memberRateData.push(RateData0);
+        this.memberRateAverage = 0;
+        this.Rate = 0;
+        for (let i = 0; i < this.memberRateData[0].length; i++) {
+          this.Rate += this.memberRateData[0][i].rate;
+        }
+        this.memberRateAverage = (
+          this.Rate / this.memberRateData[0].length
+        ).toFixed(1);
+        this.memberRateLength = 0;
+        this.memberRateLength = this.memberRateData[0].length;
       }
-      this.rateAverage = (this.Rate / this.userRateData[0].length).toFixed(1);
-      this.rateLength = 0;
-      this.rateLength = this.userRateData[0].length;
     }
     //       /* eslint-disable */
     //   let flag = confirm("저장하시겠습니까? ");
