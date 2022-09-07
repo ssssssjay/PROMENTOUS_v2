@@ -25,8 +25,7 @@ createApp(App)
   .component("Datepicker", Datepicker)
   .component("StarRating", StarRating)
   .use(vue3GoogleLogin, {
-    clientId:
-      "442992845305-oe3tmcff9s3qpj559h36doutbqhk06su.apps.googleusercontent.com"
+    clientId: process.env.VUE_APP_GOOGLE_API_ID
   })
   .use(VueClipboard)
   .use(VueSweetalert2)
