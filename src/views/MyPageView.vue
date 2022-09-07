@@ -40,7 +40,7 @@
                   type="text"
                   v-model="user.nickname" /></span
               >|
-              <span class="col-2 text-center"><strong>팀원평판</strong></span>
+              <span class="col-2 text-center"><strong>평판점수</strong></span>
               <span class="col-2 text-start">
                 <button id="bt" class="btn btn-outline-dark">
                   <i class="bi bi-star-fill pro_star_color"></i

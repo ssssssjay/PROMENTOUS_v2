@@ -1,18 +1,16 @@
 <template>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-      <div class="container">
-        <div class="logo">
-          <router-link
-            class="navbar-brand mainLogo"
-            :class="{ active: $route.path == '/' }"
-            to="/"
-            >PROMENTOUS</router-link
-          >
-        </div>
-        <div class="col text-end me-5">
-          <!-- <div class="col-lg-6 h-100 text-center text-lg-start my-auto"> -->
-
+  <header class="shadow-sm">
+    <nav class="navbar__ container">
+      <div class="navbar__logo">
+        <router-link
+          class="mainLogo"
+          :class="{ active: $route.path == '/' }"
+          to="/"
+          >PROMENTOUS</router-link
+        >
+      </div>
+      <div class="navbar__right">
+        <div class="navbar__menu">
           <span class="dropdown">
             <a
               role="button"
@@ -25,7 +23,6 @@
                     $route.path == '/project/recruit' ||
                     $route.path == '/project/review'
                 }"
-                style="font-size: 20px"
                 >프로젝트</span
               >
             </a>
@@ -48,31 +45,20 @@
               </li>
             </ul>
           </span>
-          <span class="dropdown">
-            <a
-              role="button"
-              id="dropdownMenuLink"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              :class="{ active: $route.path == '/mentolist' }"
-              @click="goToMenu('/mentolist')">
-              <span>멘토링</span>
-            </a>
-          </span>
-          <span class="dropdown" v-if="user.user_id">
-            <a
-              role="button"
-              id="dropdownMenuLink"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              :class="{ active: $route.path == '/teammanage' }"
-              @click="goToMenu('/teammanage')">
-              <span>팀관리</span>
-            </a>
-          </span>
+          <a
+            :class="{ active: $route.path == '/mentolist' }"
+            @click="goToMenu('/mentolist')">
+            <span>멘토링</span>
+          </a>
+          <a
+            :class="{ active: $route.path == '/teammanage' }"
+            @click="goToMenu('/teammanage')"
+            v-if="user.user_id">
+            <span>팀관리</span>
+          </a>
         </div>
-
-        <div class="siglog">
+        <!-- 로그인 / 드롭다운  -->
+        <div class="navbar__login">
           <button
             v-if="user.user_id == undefined"
             class="btn btn-outline-dark"
@@ -80,7 +66,6 @@
             @click="onClickOpen">
             <span>로그인</span>
           </button>
-
           <div class="loginDropdown" v-else>
             <img
               :src="user.user_image"
@@ -88,7 +73,6 @@
               style="border-radius: 50%"
               v-click-outside="closeProfile"
               @click="viewProfile" />
-
             <transition name="slide-up">
               <div class="login dropdown-menu show mt-2" v-if="clickProfile">
                 <div class="user m-2">
@@ -99,6 +83,41 @@
                     class="closeBtn btn-close"
                     @click="closeProfile"></button>
                 </div>
+                <div class="navbar__menu-tablet">
+                  <hr />
+                  <ul>
+                    <li>
+                      <router-link
+                        to="/project/recruit"
+                        :class="{ active: $route.path == '/project/recruit' }"
+                        ><i class="bi bi-person-plus me-2"></i>프로젝트
+                        모집</router-link
+                      >
+                    </li>
+                    <li>
+                      <router-link
+                        :class="{ active: $route.path == '/project/review' }"
+                        to="/project/review"
+                        ><i class="bi bi-receipt me-2"></i>프로젝트
+                        후기</router-link
+                      >
+                    </li>
+                    <li>
+                      <router-link
+                        :class="{ active: $route.path == '/mentolist' }"
+                        to="/mentolist"
+                        ><i class="bi bi-people me-2"></i>멘토링</router-link
+                      >
+                    </li>
+                    <li>
+                      <router-link
+                        :class="{ active: $route.path == '/teammanage' }"
+                        to="/teammanage">
+                        <i class="bi bi-ui-checks me-2"></i>팀관리</router-link
+                      >
+                    </li>
+                  </ul>
+                </div>
                 <hr />
                 <div class="userMenu">
                   <a
@@ -107,7 +126,6 @@
                     @click="goToMenu(`/myPageinfo/${user.user_id}`)"
                     ><i class="bi bi-gear me-2 mb-2"></i>마이페이지</a
                   >
-
                   <a @click="onClickLogout" class="logout">
                     <i class="bi bi-box-arrow-right me-2"></i>
                     로그아웃
@@ -185,21 +203,39 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-nav a {
-  font-weight: bold;
+<style scoped>
+router-link {
+  text-decoration: none;
   color: #2c3e50;
 }
-
-.logo > .mainLogo {
+a {
+  text-decoration: none;
+  color: #2c3e50;
+}
+.navbar__ {
+  display: flex;
+  padding: 7px;
+}
+.navbar__right {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+}
+.navbar__logo > .mainLogo {
   font-size: 30px;
   font-weight: bold;
 }
 .active {
   color: #1379d2;
 }
-span > a {
-  text-decoration: none;
+.navbar__menu {
+  margin-right: 50px;
+}
+.navbar__menu > span,
+.navbar__menu > a {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px 10px;
 }
 span > a:hover {
   color: #1379d2;
@@ -211,13 +247,7 @@ header {
 div > button {
   margin: 5px;
 }
-.dropdown > a {
-  font-size: 20px;
-}
 
-.dropdown {
-  margin: 10px;
-}
 .dropProfile {
   width: 50px;
   height: 50px;
@@ -259,7 +289,6 @@ div.dropdown-menu {
 }
 .userMenu > a {
   display: flex;
-  text-decoration: none;
   font-size: 16px;
   margin-left: 10px;
 }
@@ -273,6 +302,35 @@ button.closeBtn {
   top: 13px;
 }
 
+.loginDropdown {
+  position: relative;
+}
+.login.dropdown-menu {
+  position: absolute;
+  left: -170px;
+}
+.navbar__menu-tablet {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .navbar__menu {
+    display: none;
+  }
+  .navbar__menu-tablet {
+    display: block;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .navbar__menu-tablet > ul {
+    padding: 0px;
+  }
+  .navbar__menu-tablet > ul > li {
+    margin-bottom: 8px;
+  }
+}
+</style>
+
+<style lang="scss">
 /* 로그인 모달 영역 */
 .modal-container {
   position: fixed;
@@ -301,14 +359,5 @@ button.closeBtn {
       font-size: 1.5rem;
     }
   }
-}
-
-.loginDropdown {
-  position: relative;
-}
-.login.dropdown-menu {
-  position: absolute;
-  bottom: -190px;
-  left: -170px;
 }
 </style>

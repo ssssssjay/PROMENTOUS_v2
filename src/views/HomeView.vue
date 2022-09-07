@@ -116,6 +116,7 @@ button {
 .title {
   font-size: 35px;
   text-align: center;
+  font-weight: 700;
 }
 .highligh {
   color: #1a66a8;
@@ -160,6 +161,7 @@ button {
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 12px;
+    margin-top: 25px;
   }
   .left-box {
     width: 70vw;
@@ -210,6 +212,9 @@ button {
   }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
+  .first-section {
+    margin-top: 50px;
+  }
   .left-box {
     display: flex;
     justify-content: center;
