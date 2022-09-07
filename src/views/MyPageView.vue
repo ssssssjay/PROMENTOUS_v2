@@ -128,7 +128,7 @@
                   추가
                 </button>
                 <div v-for="(URL, index) in URL_LIST" :key="index">
-                  <div class="col partTo ms-1">
+                  <div class="col partTo m-2">
                     <input
                       type="text"
                       class="form-control"
