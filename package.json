@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.22.0",
     "click-outside-vue3": "^4.0.1",
     "core-js": "^3.8.3",
+    "dotenv": "^16.0.2",
     "mixins": "^0.0.1",
     "vue": "^3.2.37",
     "vue-router": "^4.0.3",
