@@ -4,13 +4,10 @@
 
 <div align="center">
 
-<img src="https://user-images.githubusercontent.com/89081441/189131807-e2925ee6-ac3f-421f-863e-71d04adbd17a.gif" width=120>
-<img src="https://user-images.githubusercontent.com/89081441/189131822-b2d95064-0fd7-42c9-acfe-6b9ddef08885.gif" width=120>
+<img src="https://user-images.githubusercontent.com/89081441/189131807-e2925ee6-ac3f-421f-863e-71d04adbd17a.gif" width=300>
+<img src="https://user-images.githubusercontent.com/89081441/189131822-b2d95064-0fd7-42c9-acfe-6b9ddef08885.gif" width=300>
+<img src="https://user-images.githubusercontent.com/89081441/189131819-57239c82-7021-421b-8bdf-025ac740a4be.gif" width=300>
 
-<br/>
-
-<img src="https://user-images.githubusercontent.com/89081441/189131819-57239c82-7021-421b-8bdf-025ac740a4be.gif" width=120>
-<img src="" width=120>
 
 <br/>
 
