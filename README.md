@@ -18,6 +18,13 @@
 
 [🖥 기존 PROMENTOUS 레포지토리](https://github.com/DEVprogramming-Team4/PROMENTOUS)
 
+## 사용 언어 
+|                                  VUE                                       |                                   NODE.JS                                  |
+| :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| <img src="[https://avatars.githubusercontent.com/u/48425930?v=4](https://w7.pngwing.com/pngs/640/199/png-transparent-javascript-logo-html-javascript-logo-angle-text-rectangle-thumbnail.png)" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+
+
+
 ## 📲 개선한 사항
 
 > **새로운 메인 페이지**를 소개합니다
