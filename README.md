@@ -21,7 +21,7 @@
 ## 사용 언어 
 |                                  VUE                                       |                                   NODE.JS                                  |
 | :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| <img src="[https://avatars.githubusercontent.com/u/48425930?v=4](https://w7.pngwing.com/pngs/640/199/png-transparent-javascript-logo-html-javascript-logo-angle-text-rectangle-thumbnail.png)" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+| <img src="https://w7.pngwing.com/pngs/640/199/png-transparent-javascript-logo-html-javascript-logo-angle-text-rectangle-thumbnail.png" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
 
 
 
