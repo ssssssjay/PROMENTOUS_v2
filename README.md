@@ -85,7 +85,7 @@
 
 <div align="center">
 
-<img width = 200, src="">
+<img width = 250, src="https://user-images.githubusercontent.com/89081441/190910791-d4b39f48-5b65-417f-b0c7-2681e4c698ef.gif">
 
 </div>
 
@@ -95,8 +95,7 @@
 - 멘토로 등록한 멘토의 프로필을 열람할 수 있습니다.
 
 <div align="center">
-    
-<img width = 200, src="">
+
     
 </div>
 
@@ -107,9 +106,8 @@
 - 진행 완료된 프로젝트의 경우엔 팀원끼리 **상호 평가 기능**을 이용할 수 있습니다.
 
 <div align="center">
-<img width = 200, src="">
-<img width = 200, src="">
-<img width = 200, src="">
+<img width = 250, src="https://user-images.githubusercontent.com/89081441/190910800-66a9438f-82fa-40d0-9f84-e04a9bdd7624.gif">
+
 </div>
 
 <br/>
