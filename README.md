@@ -21,7 +21,7 @@
 ## 사용 언어 
 |                                  VUE                                       |                                   NODE.JS                                  |
 | :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| <img src="https://w7.pngwing.com/pngs/640/199/png-transparent-javascript-logo-html-javascript-logo-angle-text-rectangle-thumbnail.png" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/300px-Vue.js_Logo_2.svg.png" width=130> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1180px-Node.js_logo.svg.png" width=130> |
 
 
 
