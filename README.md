@@ -120,7 +120,5 @@
 
 <div align="center">
     
-<img width = 175, src="">
-<img width = 175, src="">
-<img width = 175, src="">
+
 </div>
