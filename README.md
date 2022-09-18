@@ -65,16 +65,18 @@
 > **프로젝트 모집을 할 수 있습니다**
 
 - **다양한 검색 필터링** 기능을 통해 프로젝트 검색을 할 수 있습니다.
+<div align="center">
 <img width = 250, src="https://user-images.githubusercontent.com/89081441/190890657-2491dc6e-0c4e-4fa2-a6ff-7b38262440f4.gif">
-
+</div>
 - **기본 제공이 되는 양식을**통해 원하는 조건으로 팀원을 모집할 수 있습니다.
   - 시작예정일, 진행기간, 보증금여부, 모집분야, 사용 기술(언어)
+<div align="center">
 <img width = 250, src="https://user-images.githubusercontent.com/89081441/190890653-4c724443-c190-41f7-b690-0a3b808ac058.gif">
+</div>
 
 - **프로필 모달 , 댓글기능으로** 팀장과 예비 팀원의 정보를 확인할 수 있으며 소통이 가능합니다.
-<img width = 250, src="https://user-images.githubusercontent.com/89081441/190890655-32582f2a-9ab5-45dc-a0bc-09aed34ef6e2.gif">
 <div align="center">
-
+<img width = 250, src="https://user-images.githubusercontent.com/89081441/190890655-32582f2a-9ab5-45dc-a0bc-09aed34ef6e2.gif">
 </div>
 
 > **프로젝트 후기 작성이 가능합니다**
