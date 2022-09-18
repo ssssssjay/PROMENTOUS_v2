@@ -71,7 +71,7 @@
   - 시작예정일, 진행기간, 보증금여부, 모집분야, 사용 기술(언어)
 <img width = 250, src="https://user-images.githubusercontent.com/89081441/190890653-4c724443-c190-41f7-b690-0a3b808ac058.gif">
 
-- **댓글 기능으로** 팀장과 예비 팀원간의 소통이 가능합니다.
+- **프로필 모달 , 댓글기능으로** 팀장과 예비 팀원의 정보를 확인할 수 있으며 소통이 가능합니다.
 <img width = 250, src="https://user-images.githubusercontent.com/89081441/190890655-32582f2a-9ab5-45dc-a0bc-09aed34ef6e2.gif">
 <div align="center">
 
