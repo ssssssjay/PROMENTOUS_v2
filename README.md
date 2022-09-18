@@ -71,9 +71,9 @@
 
 <div align="center">
 
-<img width = 175, src="">
-<img width = 200, src="">
-<img width = 200, src="">
+<img width = 175, src="https://user-images.githubusercontent.com/89081441/190890657-2491dc6e-0c4e-4fa2-a6ff-7b38262440f4.gif">
+<img width = 200, src="https://user-images.githubusercontent.com/89081441/190890653-4c724443-c190-41f7-b690-0a3b808ac058.gif">
+<img width = 200, src="https://user-images.githubusercontent.com/89081441/190890655-32582f2a-9ab5-45dc-a0bc-09aed34ef6e2.gif">
 
 </div>
 
