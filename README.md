@@ -57,6 +57,18 @@
 <br/>
 
 ## 👨‍👩‍👧‍👦 팀원 소개
+PROMENTOUS V1 참여 팀원을 소개합니다. 
+
+|                                   곽성재                                   |                                   노영석                                   |
+| :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/48425930?v=4" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+|                 [@ssssssjay](https://github.com/ssssssjay)                 |                 [@evelo0702](https://github.com/evelo0702)                 ||                                   곽성재                                   |                                   노영석                                   |
+| :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/48425930?v=4" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+|                 [@ssssssjay](https://github.com/ssssssjay)                 |                 [@evelo0702](https://github.com/evelo0702)                 ||                                   곽성재                                   |                                   노영석                                   |
+| :------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/48425930?v=4" width=130> | <img src="https://avatars.githubusercontent.com/u/89081441?v=4" width=130> |
+|                 [@ssssssjay](https://github.com/ssssssjay)                 |                 [@evelo0702](https://github.com/evelo0702)                 |
 
 개선작업에 참여한 팀원을 소개합니다.
 
