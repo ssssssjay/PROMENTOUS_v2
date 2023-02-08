@@ -19,8 +19,8 @@
 [🖥 기존 PROMENTOUS 레포지토리](https://github.com/DEVprogramming-Team4/PROMENTOUS)
 
 ## 사용 언어 
-|                                  VUE    |                mysql                   |                                   NODE.JS                                  |
-| :---------------------------------------|:---------------------------------: | :------------------------------------------------------------------------: |
+|                                  VUE    |                                                    NODE.JS                                  |
+| :---------------------------------------|:------------------------------------------------------------------------: |
 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/300px-Vue.js_Logo_2.svg.png" width=130> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1180px-Node.js_logo.svg.png" width=130> |
 
 
