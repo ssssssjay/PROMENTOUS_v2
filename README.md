@@ -18,6 +18,14 @@
 
 [🖥 기존 PROMENTOUS 레포지토리](https://github.com/DEVprogramming-Team4/PROMENTOUS)
 
+## Database
+
+<img src="http://pngimg.com/uploads/mysql/mysql_PNG35.png" width=130>
+
+<div align="">
+<img width = 600, src="https://user-images.githubusercontent.com/48425930/218376656-5b83f217-d0d9-4fc1-8d9c-561bcf617e8e.png">
+</div>
+
 ## 사용 언어 
 |                       VUE                 |                     NODE.JS                                  |
 | :---------------------------------------|:------------------------------------------: |
